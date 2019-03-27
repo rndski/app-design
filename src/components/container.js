@@ -7,28 +7,27 @@ import Typography from "@material-ui/core/Typography";
 const styles = theme => ({
   root: {
     ...theme.mixins.gutters(),
-    paddingTop: theme.spacing.unit * 10,
-    paddingBottom: theme.spacing.unit * 10,
-    backgroundColor: "#90caf9"
+    paddingTop: theme.spacing.unit * 8,
+    paddingBottom: theme.spacing.unit * 6,
+    height: "100vh",
+    overflow: "scroll"
   }
 });
 
-const Container = props => {
-  const { classes, name } = props;
-
+const Container = ({ classes, name, primary, children }) => {
   useEffect(() => {
     console.log(`Container-${name}: useEffect(mounted)`);
     return () => {
-      console.log(`Container-${name}: useEffect(unmounted)`);
+      console.warn(`Container-${name}: useEffect(unmounted)`);
     };
   }, []);
 
-  console.log(`${name}:Container.Render()`);
+  //console.log(`${name}:Container.Render()`);
   return (
     <React.Fragment>
       <Paper className={classes.root} elevation={1}>
-        <Typography variant="h5">{name}</Typography>
-        {props.children}
+        <Typography variant="h3">{name}</Typography>
+        {children}
       </Paper>
     </React.Fragment>
   );

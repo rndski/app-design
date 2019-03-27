@@ -7,30 +7,28 @@ import Typography from "@material-ui/core/Typography";
 const styles = theme => ({
   root: {
     ...theme.mixins.gutters(),
-    paddingTop: theme.spacing.unit * 10,
-    paddingBottom: theme.spacing.unit * 10,
-    backgroundColor: "#bbdefb"
+    padding: theme.spacing.unit * 3,
+    paddingBottom: theme.spacing.unit * 3,
+    backgroundColor: "#f5f5f5"
   }
 });
 
-const Content = props => {
-  const { classes, name } = props;
-
+const Content = ({ classes, name, children }) => {
   useEffect(() => {
     console.log(`Content-${name}: useEffect(mounted)`);
     return () => {
-      console.log(`Content-${name}: useEffect(unmounted)`);
+      console.warn(`Content-${name}: useEffect(unmounted)`);
     };
   }, []);
 
-  console.log("Content.Render()");
+  //console.log("Content.Render()");
   return (
     <React.Fragment>
       <Paper className={classes.root} elevation={1}>
-        <Typography variant="h5" component="h3">
-          Content
+        <Typography variant="h6" component="h3">
+          {name}
         </Typography>
-        {props.children}
+        {children}
       </Paper>
     </React.Fragment>
   );

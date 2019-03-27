@@ -1,40 +1,18 @@
 import React, { useEffect } from "react";
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
-// import Paper from "@material-ui/core/Paper";
-// import { Button } from "@material-ui/core";
-// import uiContext from "../context/ui";
-
-const styles = theme => ({
-  root: {
-    ...theme.mixins.gutters(),
-    paddingTop: theme.spacing.unit * 10,
-    paddingBottom: theme.spacing.unit * 10,
-    backgroundColor: "#e3f2fd"
-  }
-});
+import { Paper } from "@material-ui/core";
 
 const ShowBusy = props => {
-  const { /*classes*/ busy } = props;
-  //const dispatch = useContext(uiContext);
-
   useEffect(() => {
-    console.log("ShowBusy: useEffect(mounted)");
+    console.log("%c%s: useEffect(mounted)", "color:red", "ShowBusy");
     return () => {
-      console.log("ShowBusy: useEffect(unmounted)");
+      console.warn("+++ ShowBusy: useEffect(unmounted)");
     };
   }, []);
 
-  console.log("ShowBusy.Render()");
-  return (
-    <React.Fragment>
-      <div>SHOW BUSY ({busy ? "true" : "false"})</div>
-    </React.Fragment>
-  );
+  //console.log("ShowBusy.Render()");
+  return props.busy ? (
+    <Paper style={{ backgroundColor: "#448aff" }}>!!! BUSY!!! </Paper>
+  ) : null;
 };
 
-ShowBusy.propTypes = {
-  classes: PropTypes.object.isRequired
-};
-
-export default withStyles(styles)(ShowBusy);
+export default ShowBusy;

@@ -2,42 +2,92 @@ import React, { useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
-import { Button } from "@material-ui/core";
+import { Button, Switch } from "@material-ui/core";
+
 import uiContext from "../context/ui";
+import { UIActions } from "../reducers/uiReducer";
+import { DataActions } from "../reducers/dataReducer";
+import dataContext from "../context/data";
+import loadUserData from "../data/loadUsers";
 
 const styles = theme => ({
   root: {
     ...theme.mixins.gutters(),
-    paddingTop: theme.spacing.unit * 10,
-    paddingBottom: theme.spacing.unit * 10,
-    backgroundColor: "#e3f2fd"
+    height: 40
   }
 });
 
-const Busy = props => {
-  const { classes } = props;
-  const dispatch = useContext(uiContext);
+const Busy = ({ classes, busy }) => {
+  const uiDispatch = useContext(uiContext);
+  const dataDispatch = useContext(dataContext);
 
   useEffect(() => {
     console.log("Busy: useEffect(mounted)");
     return () => {
-      console.log("Busy: useEffect(unmounted)");
+      console.warn("Busy: useEffect(unmounted)");
     };
   }, []);
 
-  const toggleBusy = () => {
-    dispatch({ type: "toggle-busy" });
+  const makeBusy = () => {
+    uiDispatch({ type: UIActions.TOGGLE_BUSY });
     setTimeout(() => {
-      dispatch({ type: "toggle-busy" });
+      uiDispatch({ type: UIActions.TOGGLE_BUSY });
     }, 1500);
   };
-  console.log("Busy.Render()");
-  console.log("------------------");
+
+  const toggleBusy = () => {
+    uiDispatch({ type: UIActions.TOGGLE_BUSY });
+  };
+
+  const load = () => {
+    uiDispatch({ type: UIActions.BUSY, busy: true });
+    loadUserData(25)
+      .then(res => {
+        //console.log("got:", res.data.results);
+        dataDispatch({ type: DataActions.ADD, payload: res.data.results });
+        uiDispatch({ type: UIActions.BUSY, busy: false });
+      })
+      .catch(e => {
+        console.log("Something went wrong with getting the users... :(", e);
+        throw e;
+      });
+  };
+
+  const addUser = () => {
+    dataDispatch({
+      type: DataActions.ADD,
+      payload: [
+        {
+          name: { first: "Vaughan", last: "Koscinski" },
+          email: "boss@madden.com"
+        }
+      ]
+    });
+  };
+
+  const clear = () => {
+    dataDispatch({
+      type: DataActions.CLEAR
+    });
+  };
+
+  //console.log("Busy.Render()");
+
   return (
     <React.Fragment>
       <Paper className={classes.root} elevation={1}>
-        <Button onClick={toggleBusy} color="primary">
+        <Button onClick={makeBusy} color="secondary">
           Busy
+        </Button>
+        <Switch checked={busy} onChange={toggleBusy} />
+        <Button onClick={load} color="primary">
+          Load
+        </Button>
+        <Button onClick={addUser} color="secondary">
+          Add
+        </Button>
+        <Button onClick={clear} color="primary">
+          Clear
         </Button>
       </Paper>
     </React.Fragment>

@@ -1,39 +1,66 @@
 import React, { useReducer } from "react";
 import "./App.css";
-import { CssBaseline } from "@material-ui/core";
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import blue from "@material-ui/core/colors/blue";
+
 import Header from "./components/header";
 import Content from "./components/content";
 import Container from "./components/container";
 import Busy from "./components/busy";
-
-import uiReducer, { uiInitialState } from "./reducers/uiReducer";
-import uiContext from "./context/ui";
 import ShowBusy from "./components/showBusy";
 
+// CCS - deletes, busy etc, cause renders.
+//import Users from "./components/users";
+
+//no CSS (withstyles) - less renders
+import Users from "./components/user2";
+
+import uiReducer, { uiInitialState } from "./reducers/uiReducer";
+import dataReducer, { dInitialState } from "./reducers/dataReducer";
+
+import uiContext from "./context/ui";
+import dataContext from "./context/data";
+
 const App = () => {
-  const [state, dispatch] = useReducer(uiReducer, uiInitialState);
+  const [ui, uiDispatch] = useReducer(uiReducer, uiInitialState);
+  const [data, dataDispatch] = useReducer(dataReducer, dInitialState);
+
+  const theme = createMuiTheme({
+    palette: {
+      primary: blue
+    },
+    status: {
+      danger: "orange"
+    },
+    typography: {
+      useNextVariants: true
+    }
+  });
 
   return (
     <div className="App">
-      <CssBaseline>
-        <uiContext.Provider value={dispatch}>
-          <Header busy={state.busy} />
-
-          <Container name="Outer">
-            <Container name="Inner">
-              <ShowBusy busy={state.busy} />
-              <Content name="C1">
-                <Busy />
-                <Container name="Another">
-                  <Content name="C2">
-                    <Busy />
-                  </Content>
-                </Container>
+      <MuiThemeProvider theme={theme}>
+        <dataContext.Provider value={dataDispatch}>
+          <uiContext.Provider value={uiDispatch}>
+            <Header busy={ui.busy}>
+              <Busy busy={ui.busy} />
+            </Header>
+            <Container main={true}>
+              <Content>
+                {/* causes unmount {state.busy ? <ShowBusy busy={state.busy} /> : null} */}
+                {/* <Busy busy={ui.busy} /> */}
+                <Users users={data.users} />
+                {/* <Container name="Another">
+                    <Busy busy={ui.busy} />
+                    <Users users={data.users} />
+                  </Container> */}
               </Content>
+              {/* <Busy busy={ui.busy} /> */}
+              <ShowBusy busy={ui.busy} />
             </Container>
-          </Container>
-        </uiContext.Provider>
-      </CssBaseline>
+          </uiContext.Provider>
+        </dataContext.Provider>
+      </MuiThemeProvider>
     </div>
   );
 };

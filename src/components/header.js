@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -14,11 +14,19 @@ const styles = {
   menuButton: {
     marginLeft: -18,
     marginRight: 10
+  },
+  typography: {
+    marginRight: 10
   }
 };
 
-const Header = props => {
-  const { classes } = props;
+const Header = ({ classes, children, busy }) => {
+  useEffect(() => {
+    console.log("Header: useEffect(mounted)");
+    return () => {
+      console.warn("Header: useEffect(unmounted)");
+    };
+  }, []);
 
   return (
     <AppBar position="fixed">
@@ -28,15 +36,12 @@ const Header = props => {
           color="inherit"
           aria-label="Menu"
         >
-          {props.busy ? (
-            <CircularProgress size={24} color="inherit" />
-          ) : (
-            <MenuIcon />
-          )}
+          {busy ? <CircularProgress size={24} color="inherit" /> : <MenuIcon />}
         </IconButton>
-        <Typography variant="h6" color="inherit">
+        <Typography className={classes.typography} variant="h6" color="inherit">
           Header
         </Typography>
+        <div>{children}</div>
       </Toolbar>
     </AppBar>
   );
