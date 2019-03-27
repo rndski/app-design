@@ -44,8 +44,10 @@ const Busy = ({ classes, busy }) => {
     loadUserData(25)
       .then(res => {
         //console.log("got:", res.data.results);
-        dataDispatch({ type: DataActions.ADD, payload: res.data.results });
-        uiDispatch({ type: UIActions.BUSY, busy: false });
+        setTimeout(() => {
+          dataDispatch({ type: DataActions.ADD, payload: res.data.results });
+          uiDispatch({ type: UIActions.BUSY, busy: false });
+        }, 2000);
       })
       .catch(e => {
         console.log("Something went wrong with getting the users... :(", e);

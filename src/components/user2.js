@@ -1,6 +1,4 @@
 import React, { useEffect, useContext } from "react";
-import { withStyles } from "@material-ui/core/styles";
-import PropTypes from "prop-types";
 
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
@@ -13,17 +11,7 @@ import dataContext from "../context/data";
 import { DataActions } from "../reducers/dataReducer";
 //import uiContext from "../context/ui";
 
-const styles = theme => ({
-  card: {
-    width: 320,
-    textAlign: "left"
-  },
-  actions: {
-    display: "flex"
-  }
-});
-
-const Users = React.memo(({ users, classes }) => {
+const Users = React.memo(({ users }) => {
   const dataDispatch = useContext(dataContext);
   //const uiDispatch = useContext(uiContext);
 
@@ -39,20 +27,13 @@ const Users = React.memo(({ users, classes }) => {
     console.log("Card");
     return (
       <Grid item key={item.email}>
-        <Card
-          xs={12}
-          sm={6}
-          md={4}
-          lg={3}
-          className={classes ? classes.card : ""}
-        >
+        <Card xs={12} sm={6} md={4} lg={3}>
           <CardHeader
             avatar={
               <Avatar aria-label="">{item.name.last[0].toUpperCase()} </Avatar>
             }
             action={
               <IconButton
-                className={classes ? classes.actions : ""}
                 onClick={() => {
                   deleteUser(item.email);
                 }}
