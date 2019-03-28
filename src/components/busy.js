@@ -9,6 +9,7 @@ import { UIActions } from "../reducers/uiReducer";
 import { DataActions } from "../reducers/dataReducer";
 import dataContext from "../context/data";
 import loadUserData from "../data/loadUsers";
+import uuidv4 from "uuid/v4";
 
 const styles = theme => ({
   root: {
@@ -61,7 +62,8 @@ const Busy = ({ classes, busy }) => {
       payload: [
         {
           name: { first: "Vaughan", last: "Koscinski" },
-          email: "boss@madden.com"
+          email: "boss@madden.com",
+          login: { uuid: uuidv4() }
         }
       ]
     });
