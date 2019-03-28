@@ -30,14 +30,14 @@ const User = React.memo(props => {
 
   console.log("User Render");
 
-  const deleteUser = email => {
+  const deleteUser = uuid => {
     //uiDispatch({ type: UIActions.BUSY, busy: true });
-    dataDispatch({ type: DataActions.DELETE, email });
+    dataDispatch({ type: DataActions.DELETE, uuid });
     //uiDispatch({ type: UIActions.BUSY, busy: false });
   };
 
   return (
-    <Grid item key={item.email}>
+    <Grid item>
       <Card xs={12} sm={6} md={4} lg={3} className={classes.card}>
         <CardHeader
           avatar={
@@ -47,7 +47,7 @@ const User = React.memo(props => {
             <IconButton
               className={classes.actions}
               onClick={() => {
-                deleteUser(item.email);
+                deleteUser(item.login.uuid);
               }}
             >
               <DeleteIcon />

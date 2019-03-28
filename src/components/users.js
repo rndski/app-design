@@ -4,6 +4,7 @@ import User from "./user";
 import Grid from "@material-ui/core/Grid";
 
 const Users = ({ users }) => {
+  console.log("Users Render");
   useEffect(() => {
     console.log("%c%s: useEffect(mounted)", "color:red", "Users");
     return () => {

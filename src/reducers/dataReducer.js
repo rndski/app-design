@@ -16,7 +16,7 @@ export const uiReducer = (state, action) => {
       return { users: [], loaded: false };
     case DataActions.DELETE:
       let users = state.users.filter(user => {
-        return user.email !== action.email;
+        return user.login.uuid !== action.uuid;
       });
       return { users };
     default:
