@@ -17,7 +17,8 @@ const styles = {
     display: "flex",
     padding: 5,
     justifyContent: "center"
-  }
+  },
+  userIcon: { color: "black", paddingTop: 6, paddingRight: 10 }
 };
 
 const Busy = ({ classes, count }) => {
@@ -32,21 +33,24 @@ const Busy = ({ classes, count }) => {
     }, delay);
   };
 
-  const load = () => {
+  const load = async () => {
     appDispatch({ type: AppActions.BUSY, busy: true });
-    loadUserData(15)
-      .then(res => {
-        const payload = {
-          users: res.data.results,
-          message: `Loaded ${res.data.results.length} new users...`,
-          busy: false
-        };
-        dispatchWithDelay(AppActions.ADD, payload);
-      })
-      .catch(e => {
-        console.log("Something went wrong with getting the users... :(", e);
-        throw e;
-      });
+
+    try {
+      const res = await loadUserData(15);
+      const payload = {
+        users: res.data.results,
+        message: `Loaded ${res.data.results.length} new users...`,
+        busy: false
+      };
+      dispatchWithDelay(AppActions.ADD, payload);
+    } catch (e) {
+      const payload = {
+        message: `Something went wrong with getting the users... :(`,
+        busy: false
+      };
+      dispatchWithDelay(AppActions.ERROR, payload);
+    }
   };
 
   const add = () => {
@@ -59,13 +63,23 @@ const Busy = ({ classes, count }) => {
         {
           name: { first: "Vaughan", last: "Koscinski" },
           email: "boss@madden.com",
+          gender: "male",
           login: { uuid: uuidv4() }
         }
       ]
     };
-    dispatchWithDelay(AppActions.ADD, payload);
+    dispatchWithDelay(AppActions.ADD, payload, 750);
   };
 
+  const error = () => {
+    appDispatch({ type: AppActions.BUSY, busy: true });
+
+    const payload = {
+      message: `Testing the error reducer... :(`,
+      busy: false
+    };
+    dispatchWithDelay(AppActions.ERROR, payload, 3000);
+  };
   const clear = () => {
     const payload = {
       users: [],
@@ -78,12 +92,7 @@ const Busy = ({ classes, count }) => {
   return (
     <React.Fragment>
       <Paper className={classes.root} square={true} elevation={1}>
-        {/* <Button onClick={makeBusy} color="secondary">
-          Busy
-        </Button>
-		<Switch checked={busy} onChange={toggleBusy} /> */}
-
-        <div style={{ paddingTop: 6, paddingRight: 10 }}>
+        <div className={classes.userIcon}>
           <Badge
             className={classes.margin}
             badgeContent={count}
@@ -92,16 +101,17 @@ const Busy = ({ classes, count }) => {
             <PersonOutlineRounded />
           </Badge>
         </div>
-
         <Button onClick={load} color="primary">
           Load
         </Button>
-
         <Button onClick={add} color="primary">
           Add
         </Button>
         <Button onClick={clear} color="secondary">
           Clear
+        </Button>
+        <Button onClick={error} color="secondary">
+          Error
         </Button>
       </Paper>
     </React.Fragment>
@@ -109,7 +119,8 @@ const Busy = ({ classes, count }) => {
 };
 
 Busy.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  count: PropTypes.number.isRequired
 };
 
 export default withStyles(styles)(Busy);

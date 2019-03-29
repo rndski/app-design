@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { withStyles } from "@material-ui/core/styles";
+import PropTypes from "prop-types";
 import IconButton from "@material-ui/core/IconButton";
 import Snackbar from "@material-ui/core/Snackbar";
 import CloseIcon from "@material-ui/icons/Close";
@@ -10,13 +11,13 @@ const styles = {
   }
 };
 
-const ActionBar = props => {
-  const { message = "", classes } = props;
+const ActionBar = React.memo(props => {
+  const { message = "", messageKey, classes } = props;
   const [open, setOpen] = useState(true);
 
   useEffect(() => {
     setOpen(true);
-  }, [message]);
+  }, [messageKey, message]);
 
   const onClose = (e, r) => {
     setOpen(false);
@@ -40,6 +41,7 @@ const ActionBar = props => {
           aria-label="Close"
           color="inherit"
           className={classes.close}
+          onClick={onClose}
         >
           <CloseIcon />
         </IconButton>
@@ -47,6 +49,12 @@ const ActionBar = props => {
       message={<span id="message-id">{message}</span>}
     />
   );
+});
+
+ActionBar.propTypes = {
+  classes: PropTypes.object.isRequired,
+  message: PropTypes.string.isRequired,
+  messageKey: PropTypes.number.isRequired
 };
 
 export default withStyles(styles)(ActionBar);

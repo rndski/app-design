@@ -1,7 +1,9 @@
 export const appInitialState = {
   users: [],
   busy: false,
-  message: ""
+  message: "",
+  messageKey: 0,
+  theme: null
 };
 
 export const AppActions = {
@@ -9,17 +11,20 @@ export const AppActions = {
   CLEAR: "clear",
   DELETE: "delete",
 
+  ERROR: "error",
   BUSY: "busy"
 };
 
 export const appReducer = (state, action) => {
-  //console.log("DataReducer: ", action.type, action);
+  console.log(`Reduce[${action.type}]`);
+
   switch (action.type) {
     case AppActions.ADD:
       return {
         ...state,
         ...action.payload,
-        users: [...state.users, ...action.payload.users]
+        users: [...state.users, ...action.payload.users],
+        messageKey: state.messageKey + 1
       };
     case AppActions.CLEAR:
       return {
@@ -38,6 +43,9 @@ export const appReducer = (state, action) => {
       return { ...state, busy: action.busy };
     default:
       return state;
+
+    case AppActions.ERROR:
+      return { ...state, ...action.payload, messageKey: state.messageKey + 1 };
   }
 };
 

@@ -5,16 +5,15 @@ import User from "./user";
 import Grid from "@material-ui/core/Grid";
 
 const Users = ({ users }) => {
-  //console.log("Users Render");
-
   return users.length > 0 ? (
     <div style={{ padding: 15 }}>
       <Grid
         container
         direction="row"
-        justify="space-between"
+        justify="center"
         alignItems="stretch"
-        spacing={24}
+        alignContent="space-around"
+        spacing={32}
       >
         {users.map(item => {
           return <User key={item.login.uuid} item={item} />;

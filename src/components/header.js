@@ -1,5 +1,6 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
+import PropTypes from "prop-types";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
@@ -48,6 +49,12 @@ const Header = ({ classes, children, busy }) => {
       </AppBar>
     </React.Fragment>
   );
+};
+
+Header.propTypes = {
+  classes: PropTypes.object.isRequired,
+  busy: PropTypes.bool.isRequired,
+  children: PropTypes.object
 };
 
 export default withStyles(styles)(Header);

@@ -8,17 +8,27 @@ import CardHeader from "@material-ui/core/CardHeader";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
+import pink from "@material-ui/core/colors/pink";
+import blue from "@material-ui/core/colors/blue";
 
 import appContext from "../context/app";
 import { AppActions } from "../reducers/appReducer";
 
 const styles = {
   card: {
-    width: 320,
+    width: 325,
     textAlign: "left"
   },
   actions: {
     display: "flex"
+  },
+  blueAvatar: {
+    color: blue[900],
+    backgroundColor: blue[50]
+  },
+  pinkAvatar: {
+    color: pink[900],
+    backgroundColor: pink[50]
   }
 };
 
@@ -43,7 +53,14 @@ const User = React.memo(props => {
       <Card xs={12} sm={6} md={4} lg={4} className={classes.card}>
         <CardHeader
           avatar={
-            <Avatar aria-label="">{item.name.last[0].toUpperCase()} </Avatar>
+            <Avatar
+              className={
+                item.gender === "male" ? classes.blueAvatar : classes.pinkAvatar
+              }
+              aria-label=""
+            >
+              {item.name.last[0].toUpperCase()}{" "}
+            </Avatar>
           }
           action={
             <IconButton

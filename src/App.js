@@ -1,7 +1,7 @@
 import React, { useReducer } from "react";
 import "./App.css";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import orange from "@material-ui/core/colors/orange";
+import blue from "@material-ui/core/colors/blue";
 
 import Header from "./components/header";
 import Content from "./components/content";
@@ -17,10 +17,10 @@ const App = () => {
 
   const theme = createMuiTheme({
     palette: {
-      primary: orange
+      primary: blue
     },
     status: {
-      danger: "orange"
+      danger: "red"
     },
     typography: {
       useNextVariants: true
@@ -34,10 +34,14 @@ const App = () => {
           <Header busy={appState.busy}>
             <Busy count={appState.users.length} />
           </Header>
+
           <Content>
             <Users users={appState.users} />
           </Content>
-          <ActionBar message={appState.message} />
+          <ActionBar
+            message={appState.message}
+            messageKey={appState.messageKey}
+          />
         </appContext.Provider>
       </MuiThemeProvider>
     </div>
