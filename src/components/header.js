@@ -10,6 +10,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import Button from "@material-ui/core/Button";
 import Badge from "@material-ui/core/Badge";
 import PersonOutlineRounded from "@material-ui/icons/PersonOutlineRounded";
+import Tooltip from "@material-ui/core/Tooltip";
 
 const styles = {
   root: {
@@ -56,8 +57,9 @@ const Header = ({ classes, children, count, busy }) => {
               <PersonOutlineRounded />
             </Badge>
           </div>
-
-          <Button color="inherit">Login</Button>
+          <Tooltip title="Coming Soon!" aria-label="Coming Soon!">
+            <Button color="inherit">Login</Button>
+          </Tooltip>
         </Toolbar>
         {children}
       </AppBar>
