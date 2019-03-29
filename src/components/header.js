@@ -41,7 +41,7 @@ const Header = ({ classes, children, busy }) => {
             variant="h6"
             color="inherit"
           >
-            Header
+            Users
           </Typography>
         </Toolbar>
         {children}

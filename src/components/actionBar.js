@@ -26,13 +26,13 @@ const ActionBar = props => {
     <Snackbar
       open={open && message.length > 0}
       anchorOrigin={{
-        vertical: "bottom",
-        horizontal: "left"
+        vertical: "top",
+        horizontal: "center"
       }}
       ContentProps={{
         "aria-describedby": "message-id"
       }}
-      autoHideDuration={4000}
+      autoHideDuration={1500}
       onClose={onClose}
       action={[
         <IconButton

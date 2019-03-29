@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
+import Badge from "@material-ui/core/Badge";
+import PersonOutlineRounded from "@material-ui/icons/PersonOutlineRounded";
+import { AppActions } from "../reducers/appReducer";
+import appContext from "../context/app";
 
-import uiContext from "../context/ui";
-import { UIActions } from "../reducers/uiReducer";
-import { DataActions } from "../reducers/dataReducer";
-import dataContext from "../context/data";
 import loadUserData from "../data/loadUsers";
 import uuidv4 from "uuid/v4";
 
@@ -20,33 +20,28 @@ const styles = {
   }
 };
 
-const Busy = ({ classes, busy }) => {
-  const uiDispatch = useContext(uiContext);
-  const dataDispatch = useContext(dataContext);
+const Busy = ({ classes, count }) => {
+  const appDispatch = useContext(appContext);
 
-  // const makeBusy = () => {
-  //   uiDispatch({ type: UIActions.TOGGLE_BUSY });
-  //   setTimeout(() => {
-  //     uiDispatch({ type: UIActions.TOGGLE_BUSY });
-  //   }, 1500);
-  // };
-
-  // const toggleBusy = () => {
-  //   uiDispatch({ type: UIActions.TOGGLE_BUSY });
-  // };
+  const dispatchWithDelay = (type, payload, delay = 300) => {
+    setTimeout(() => {
+      appDispatch({
+        type,
+        payload
+      });
+    }, delay);
+  };
 
   const load = () => {
-    uiDispatch({
-      type: UIActions.BUSY,
-      busy: true,
-      message: "Loading Users..."
-    });
-
-    loadUserData(25)
+    appDispatch({ type: AppActions.BUSY, busy: true });
+    loadUserData(15)
       .then(res => {
-        dataDispatch({ type: DataActions.ADD, payload: res.data.results });
-        const action = `Loaded ${res.data.results.length} users...`;
-        uiDispatch({ type: UIActions.BUSY, busy: false, action });
+        const payload = {
+          users: res.data.results,
+          message: `Loaded ${res.data.results.length} new users...`,
+          busy: false
+        };
+        dispatchWithDelay(AppActions.ADD, payload);
       })
       .catch(e => {
         console.log("Something went wrong with getting the users... :(", e);
@@ -55,32 +50,29 @@ const Busy = ({ classes, busy }) => {
   };
 
   const add = () => {
-    uiDispatch({ type: UIActions.BUSY, busy: true });
+    appDispatch({ type: AppActions.BUSY, busy: true });
 
-    setTimeout(() => {
-      dataDispatch({
-        type: DataActions.ADD,
-        payload: [
-          {
-            name: { first: "Vaughan", last: "Koscinski" },
-            email: "boss@madden.com",
-            login: { uuid: uuidv4() }
-          }
-        ]
-      });
-
-      uiDispatch({
-        type: UIActions.BUSY,
-        busy: false,
-        action: "User created..."
-      });
-    });
+    const payload = {
+      busy: false,
+      message: "Vaughan Koscinski has been added...",
+      users: [
+        {
+          name: { first: "Vaughan", last: "Koscinski" },
+          email: "boss@madden.com",
+          login: { uuid: uuidv4() }
+        }
+      ]
+    };
+    dispatchWithDelay(AppActions.ADD, payload);
   };
 
   const clear = () => {
-    dataDispatch({
-      type: DataActions.CLEAR
-    });
+    const payload = {
+      users: [],
+      message: "Users have been cleared..."
+    };
+
+    dispatchWithDelay(AppActions.CLEAR, payload);
   };
 
   return (
@@ -89,10 +81,22 @@ const Busy = ({ classes, busy }) => {
         {/* <Button onClick={makeBusy} color="secondary">
           Busy
         </Button>
-        <Switch checked={busy} onChange={toggleBusy} /> */}
+		<Switch checked={busy} onChange={toggleBusy} /> */}
+
+        <div style={{ paddingTop: 6, paddingRight: 10 }}>
+          <Badge
+            className={classes.margin}
+            badgeContent={count}
+            color="secondary"
+          >
+            <PersonOutlineRounded />
+          </Badge>
+        </div>
+
         <Button onClick={load} color="primary">
           Load
         </Button>
+
         <Button onClick={add} color="primary">
           Add
         </Button>

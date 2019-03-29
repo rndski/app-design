@@ -9,9 +9,8 @@ import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 
-import dataContext from "../context/data";
-import { DataActions } from "../reducers/dataReducer";
-//import uiContext from "../context/ui";
+import appContext from "../context/app";
+import { AppActions } from "../reducers/appReducer";
 
 const styles = {
   card: {
@@ -25,15 +24,18 @@ const styles = {
 
 const User = React.memo(props => {
   const { item, classes } = props;
-  const dataDispatch = useContext(dataContext);
-  //const uiDispatch = useContext(uiContext);
+  const appDispatch = useContext(appContext);
 
   console.log("User Render");
 
-  const deleteUser = uuid => {
-    //uiDispatch({ type: UIActions.BUSY, busy: true });
-    dataDispatch({ type: DataActions.DELETE, uuid });
-    //uiDispatch({ type: UIActions.BUSY, busy: false });
+  const deleteUser = item => {
+    appDispatch({
+      type: AppActions.DELETE,
+      payload: {
+        uuid: item.login.uuid,
+        message: `${item.name.first} ${item.name.last} has been deleted...`
+      }
+    });
   };
 
   return (
@@ -47,7 +49,7 @@ const User = React.memo(props => {
             <IconButton
               className={classes.actions}
               onClick={() => {
-                deleteUser(item.login.uuid);
+                deleteUser(item);
               }}
             >
               <DeleteIcon />

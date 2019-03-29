@@ -9,15 +9,11 @@ import Busy from "./components/busy";
 import ActionBar from "./components/actionBar";
 import Users from "./components/users";
 
-import uiReducer, { uiInitialState } from "./reducers/uiReducer";
-import dataReducer, { dInitialState } from "./reducers/dataReducer";
-
-import uiContext from "./context/ui";
-import dataContext from "./context/data";
+import appReducer, { appInitialState } from "./reducers/appReducer";
+import appContext from "./context/app";
 
 const App = () => {
-  const [ui, uiDispatch] = useReducer(uiReducer, uiInitialState);
-  const [data, dataDispatch] = useReducer(dataReducer, dInitialState);
+  const [appState, appDispatch] = useReducer(appReducer, appInitialState);
 
   const theme = createMuiTheme({
     palette: {
@@ -34,18 +30,15 @@ const App = () => {
   return (
     <div className="App">
       <MuiThemeProvider theme={theme}>
-        <dataContext.Provider value={dataDispatch}>
-          <uiContext.Provider value={uiDispatch}>
-            <Header busy={ui.busy}>
-              <Busy busy={ui.busy} />
-            </Header>
-            <Content>
-              <Users users={data.users} />
-            </Content>
-
-            <ActionBar message={ui.action} />
-          </uiContext.Provider>
-        </dataContext.Provider>
+        <appContext.Provider value={appDispatch}>
+          <Header busy={appState.busy}>
+            <Busy count={appState.users.length} />
+          </Header>
+          <Content>
+            <Users users={appState.users} />
+          </Content>
+          <ActionBar message={appState.message} />
+        </appContext.Provider>
       </MuiThemeProvider>
     </div>
   );
