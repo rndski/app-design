@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
@@ -6,21 +6,16 @@ import Typography from "@material-ui/core/Typography";
 
 const styles = theme => ({
   root: {
-    ...theme.mixins.gutters(),
-    padding: theme.spacing.unit * 3,
-    paddingBottom: theme.spacing.unit * 3,
-    backgroundColor: "#f5f5f5"
+    //...theme.mixins.gutters(),
+    // padding: theme.spacing.unit * 3,
+    // paddingBottom: theme.spacing.unit * 3,
+
+    backgroundColor: "#f5f5f5",
+    marginTop: 105
   }
 });
 
 const Content = ({ classes, name, children }) => {
-  useEffect(() => {
-    console.log(`Content-${name}: useEffect(mounted)`);
-    return () => {
-      console.warn(`Content-${name}: useEffect(unmounted)`);
-    };
-  }, []);
-
   //console.log("Content.Render()");
   return (
     <React.Fragment>

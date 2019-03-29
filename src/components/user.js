@@ -38,7 +38,7 @@ const User = React.memo(props => {
 
   return (
     <Grid item>
-      <Card xs={12} sm={6} md={4} lg={3} className={classes.card}>
+      <Card xs={12} sm={6} md={4} lg={4} className={classes.card}>
         <CardHeader
           avatar={
             <Avatar aria-label="">{item.name.last[0].toUpperCase()} </Avatar>

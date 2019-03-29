@@ -1,19 +1,13 @@
 import React, { useReducer } from "react";
 import "./App.css";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import blue from "@material-ui/core/colors/blue";
+import orange from "@material-ui/core/colors/orange";
 
 import Header from "./components/header";
 import Content from "./components/content";
-import Container from "./components/container";
 import Busy from "./components/busy";
-import ShowBusy from "./components/showBusy";
-
-// CCS - deletes, busy etc, cause renders.
+import ActionBar from "./components/actionBar";
 import Users from "./components/users";
-
-//no CSS (withstyles) - less renders
-//import Users from "./components/user2";
 
 import uiReducer, { uiInitialState } from "./reducers/uiReducer";
 import dataReducer, { dInitialState } from "./reducers/dataReducer";
@@ -27,7 +21,7 @@ const App = () => {
 
   const theme = createMuiTheme({
     palette: {
-      primary: blue
+      primary: orange
     },
     status: {
       danger: "orange"
@@ -45,19 +39,11 @@ const App = () => {
             <Header busy={ui.busy}>
               <Busy busy={ui.busy} />
             </Header>
-            <Container main={true}>
-              <Content>
-                {/* causes unmount {state.busy ? <ShowBusy busy={state.busy} /> : null} */}
-                {/* <Busy busy={ui.busy} /> */}
-                <Users users={data.users} />
-                {/* <Container name="Another">
-                    <Busy busy={ui.busy} />
-                    <Users users={data.users} />
-                  </Container> */}
-              </Content>
-              {/* <Busy busy={ui.busy} /> */}
-              <ShowBusy busy={ui.busy} />
-            </Container>
+            <Content>
+              <Users users={data.users} />
+            </Content>
+
+            <ActionBar message={ui.action} />
           </uiContext.Provider>
         </dataContext.Provider>
       </MuiThemeProvider>

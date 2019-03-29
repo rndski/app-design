@@ -7,7 +7,7 @@ export const DataActions = {
 };
 
 export const uiReducer = (state, action) => {
-  console.log("DataReducer: ", action.type, action);
+  //console.log("DataReducer: ", action.type, action);
   switch (action.type) {
     case DataActions.ADD:
       return { users: [...state.users, ...action.payload] };
