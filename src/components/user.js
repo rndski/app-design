@@ -42,7 +42,7 @@ const User = React.memo(props => {
     appDispatch({
       type: AppActions.DELETE,
       payload: {
-        uuid: item.login.uuid,
+        users: [item],
         message: `${item.name.first} ${item.name.last} has been deleted...`
       }
     });

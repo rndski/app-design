@@ -32,11 +32,13 @@ export const appReducer = (state, action) => {
         ...action.payload
       };
     case AppActions.DELETE:
+      let uuids = [];
+      for (let user of action.payload.users) uuids.push(user.login.uuid);
+
       let users = state.users.filter(user => {
-        return user.login.uuid !== action.payload.uuid;
+        return !uuids.includes(user.login.uuid);
       });
       let s = { ...state, ...action.payload, users };
-      delete s.uuid;
       return s;
 
     case AppActions.BUSY:
