@@ -12,8 +12,8 @@ const styles = {
   }
 };
 
-const Content = ({ classes, name, children }) => {
-  return (
+const Content = ({ classes, name, children, show }) => {
+  return show ? (
     <React.Fragment>
       <Paper className={classes.root} elevation={1}>
         <Typography variant="h6" component="h3">
@@ -22,13 +22,14 @@ const Content = ({ classes, name, children }) => {
         {children}
       </Paper>
     </React.Fragment>
-  );
+  ) : null;
 };
 
 Content.propTypes = {
   classes: PropTypes.object.isRequired,
   name: PropTypes.string,
-  children: PropTypes.object
+  children: PropTypes.object,
+  show: PropTypes.bool.isRequired
 };
 
 export default withStyles(styles)(Content);

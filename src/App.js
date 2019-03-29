@@ -31,11 +31,10 @@ const App = () => {
     <div className="App">
       <MuiThemeProvider theme={theme}>
         <appContext.Provider value={appDispatch}>
-          <Header busy={appState.busy}>
-            <Busy count={appState.users.length} />
+          <Header busy={appState.busy} count={appState.users.length}>
+            <Busy />
           </Header>
-
-          <Content>
+          <Content show={true}>
             <Users users={appState.users} />
           </Content>
           <ActionBar

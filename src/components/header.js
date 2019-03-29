@@ -7,23 +7,29 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import Button from "@material-ui/core/Button";
+import Badge from "@material-ui/core/Badge";
+import PersonOutlineRounded from "@material-ui/icons/PersonOutlineRounded";
 
 const styles = {
   root: {
     flexGrow: 1
   },
+  users: {
+    flexGrow: 1,
+    textAlign: "right",
+    paddingRight: 10,
+    paddingTop: 1
+  },
   menuButton: {
     marginLeft: -18,
-    marginRight: 10
-  },
-  typography: {
     marginRight: 10
   }
 };
 
-const Header = ({ classes, children, busy }) => {
+const Header = ({ classes, children, count, busy }) => {
   return (
-    <React.Fragment>
+    <div className={classes.root}>
       <AppBar position="fixed">
         <Toolbar variant="dense">
           <IconButton
@@ -37,24 +43,33 @@ const Header = ({ classes, children, busy }) => {
               <MenuIcon />
             )}
           </IconButton>
-          <Typography
-            className={classes.typography}
-            variant="h6"
-            color="inherit"
-          >
+
+          <Typography variant="h6" color="inherit">
             Users
           </Typography>
+          <div className={classes.users}>
+            <Badge
+              className={classes.badge}
+              badgeContent={count}
+              color="secondary"
+            >
+              <PersonOutlineRounded />
+            </Badge>
+          </div>
+
+          <Button color="inherit">Login</Button>
         </Toolbar>
         {children}
       </AppBar>
-    </React.Fragment>
+    </div>
   );
 };
 
 Header.propTypes = {
   classes: PropTypes.object.isRequired,
   busy: PropTypes.bool.isRequired,
-  children: PropTypes.object
+  children: PropTypes.object,
+  count: PropTypes.number.isRequired
 };
 
 export default withStyles(styles)(Header);

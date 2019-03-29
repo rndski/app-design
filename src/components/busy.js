@@ -3,8 +3,6 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
-import Badge from "@material-ui/core/Badge";
-import PersonOutlineRounded from "@material-ui/icons/PersonOutlineRounded";
 import { AppActions } from "../reducers/appReducer";
 import appContext from "../context/app";
 
@@ -17,8 +15,7 @@ const styles = {
     display: "flex",
     padding: 5,
     justifyContent: "center"
-  },
-  userIcon: { color: "black", paddingTop: 6, paddingRight: 10 }
+  }
 };
 
 const Busy = ({ classes, count }) => {
@@ -91,16 +88,7 @@ const Busy = ({ classes, count }) => {
 
   return (
     <React.Fragment>
-      <Paper className={classes.root} square={true} elevation={1}>
-        <div className={classes.userIcon}>
-          <Badge
-            className={classes.margin}
-            badgeContent={count}
-            color="secondary"
-          >
-            <PersonOutlineRounded />
-          </Badge>
-        </div>
+      <Paper className={classes.root} square={true} elevation={0}>
         <Button onClick={load} color="primary">
           Load
         </Button>
@@ -119,8 +107,7 @@ const Busy = ({ classes, count }) => {
 };
 
 Busy.propTypes = {
-  classes: PropTypes.object.isRequired,
-  count: PropTypes.number.isRequired
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(Busy);

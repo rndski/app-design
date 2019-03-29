@@ -5,8 +5,8 @@ import User from "./user";
 import Grid from "@material-ui/core/Grid";
 
 const Users = ({ users }) => {
-  return users.length > 0 ? (
-    <div style={{ padding: 15 }}>
+  return (
+    <div style={{ paddingTop: 25, paddingBottom: 25 }}>
       <Grid
         container
         direction="row"
@@ -20,7 +20,7 @@ const Users = ({ users }) => {
         })}
       </Grid>
     </div>
-  ) : null;
+  );
 };
 
 Users.propTypes = {
