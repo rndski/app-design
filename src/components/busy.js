@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
@@ -21,6 +21,10 @@ const styles = {
 const Busy = ({ classes, count }) => {
   const appDispatch = useContext(appContext);
 
+  useEffect(() => {
+    load(null, 25);
+  }, []);
+
   const dispatchWithDelay = (type, payload, delay = 300) => {
     setTimeout(() => {
       appDispatch({
@@ -30,11 +34,11 @@ const Busy = ({ classes, count }) => {
     }, delay);
   };
 
-  const load = async () => {
+  const load = async (event, count) => {
     appDispatch({ type: AppActions.BUSY, busy: true });
 
     try {
-      const res = await loadUserData(15);
+      const res = await loadUserData(count || 10);
       const payload = {
         users: res.data.results,
         message: `Loaded ${res.data.results.length} new users...`,
