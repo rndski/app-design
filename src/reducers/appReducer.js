@@ -3,13 +3,20 @@ export const appInitialState = {
   busy: false,
   message: "",
   messageKey: 0,
-  theme: null
+  theme: null,
+
+  edit: {
+    user: { name: {} },
+    open: false
+  }
 };
 
 export const AppActions = {
   ADD: "add",
   CLEAR: "clear",
   DELETE: "delete",
+  EDIT: "edit",
+  SAVE: "save",
 
   ERROR: "error",
   BUSY: "busy"
@@ -40,6 +47,20 @@ export const appReducer = (state, action) => {
       });
       let s = { ...state, ...action.payload, users };
       return s;
+    case AppActions.EDIT:
+      return { ...state, edit: action.payload.edit };
+    case AppActions.SAVE:
+      let updated = action.payload.edit.user;
+      const newUsers = state.users.map(obj =>
+        updated.login.uuid === obj.login.uuid ? updated : obj
+      );
+      return {
+        ...state,
+        ...action.payload,
+        messageKey: state.messageKey + 1,
+        users: [...newUsers],
+        edit: { ...action.payload.edit }
+      };
 
     case AppActions.BUSY:
       return { ...state, busy: action.busy };

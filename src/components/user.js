@@ -5,9 +5,10 @@ import PropTypes from "prop-types";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
+import CardActions from "@material-ui/core/CardActions";
 import Avatar from "@material-ui/core/Avatar";
-import IconButton from "@material-ui/core/IconButton";
-import DeleteIcon from "@material-ui/icons/Delete";
+import Button from "@material-ui/core/Button";
+
 import pink from "@material-ui/core/colors/pink";
 import blue from "@material-ui/core/colors/blue";
 
@@ -20,7 +21,7 @@ const styles = {
     textAlign: "left"
   },
   actions: {
-    display: "flex"
+    display: "flex-grow"
   },
   blueAvatar: {
     color: blue[900],
@@ -36,14 +37,24 @@ const User = React.memo(props => {
   const { item, classes } = props;
   const appDispatch = useContext(appContext);
 
-  console.log("User Render");
-
   const deleteUser = item => {
     appDispatch({
       type: AppActions.DELETE,
       payload: {
         users: [item],
         message: `${item.name.first} ${item.name.last} has been deleted...`
+      }
+    });
+  };
+
+  const editUser = item => {
+    appDispatch({
+      type: AppActions.EDIT,
+      payload: {
+        edit: {
+          user: item,
+          open: true
+        }
       }
     });
   };
@@ -59,22 +70,30 @@ const User = React.memo(props => {
               }
               aria-label=""
             >
-              {item.name.last[0].toUpperCase()}{" "}
+              {item.name.last[0].toUpperCase()}
             </Avatar>
           }
-          action={
-            <IconButton
-              className={classes.actions}
-              onClick={() => {
-                deleteUser(item);
-              }}
-            >
-              <DeleteIcon />
-            </IconButton>
-          }
+          action={<React.Fragment />}
           title={`${item.name.first} ${item.name.last}`}
           subheader={item.email}
         />
+
+        <CardActions>
+          <Button
+            onClick={() => {
+              editUser(item);
+            }}
+          >
+            Edit
+          </Button>
+          <Button
+            onClick={() => {
+              deleteUser(item);
+            }}
+          >
+            Delete
+          </Button>
+        </CardActions>
       </Card>
     </Grid>
   );

@@ -1,7 +1,7 @@
 import React, { useReducer } from "react";
 import "./App.css";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import blue from "@material-ui/core/colors/blue";
+import orange from "@material-ui/core/colors/orange";
 
 import Header from "./components/header";
 import Content from "./components/content";
@@ -11,13 +11,14 @@ import Users from "./components/users";
 
 import appReducer, { appInitialState } from "./reducers/appReducer";
 import appContext from "./context/app";
+import EditUser from "./dialogs/edit";
 
 const App = () => {
   const [appState, appDispatch] = useReducer(appReducer, appInitialState);
 
   const theme = createMuiTheme({
     palette: {
-      primary: blue
+      primary: orange
     },
     status: {
       danger: "red"
@@ -41,6 +42,7 @@ const App = () => {
             message={appState.message}
             messageKey={appState.messageKey}
           />
+          <EditUser item={appState.edit.user} open={appState.edit.open} />
         </appContext.Provider>
       </MuiThemeProvider>
     </div>
