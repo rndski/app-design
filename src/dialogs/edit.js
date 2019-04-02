@@ -30,11 +30,12 @@ const EditUser = React.memo(props => {
   const handleSave = e => {
     e.preventDefault();
 
+    const messageText = isNew ? "has been created!" : "has been updated!";
     appDispatch({
       type: AppActions.SAVE,
       payload: {
         edit: { ...edit, user },
-        message: `${user.name.first} ${user.name.last} has been updated...`
+        message: `${user.name.first} ${user.name.last} ${messageText}`
       }
     });
   };
@@ -46,9 +47,7 @@ const EditUser = React.memo(props => {
     setUser({ ...user, [e.target.id]: e.target.value });
   };
 
-  const contentText = isNew
-    ? "Enter new user's detials."
-    : "Modify the user's details.";
+  const contentText = isNew ? "Add user details" : "Change user details";
 
   return (
     <Dialog
