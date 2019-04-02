@@ -12,6 +12,7 @@ import Users from "./components/users";
 import appReducer, { appInitialState } from "./reducers/appReducer";
 import appContext from "./context/app";
 import EditUser from "./dialogs/edit";
+import { CssBaseline } from "@material-ui/core";
 
 const App = () => {
   const [appState, appDispatch] = useReducer(appReducer, appInitialState);
@@ -30,6 +31,7 @@ const App = () => {
 
   return (
     <div className="App">
+      <CssBaseline />
       <MuiThemeProvider theme={theme}>
         <appContext.Provider value={appDispatch}>
           <Header busy={appState.busy} count={appState.users.length}>

@@ -7,7 +7,9 @@ import Typography from "@material-ui/core/Typography";
 const styles = {
   root: {
     backgroundColor: "#f5f5f5",
-    marginTop: 105,
+    marginTop: 95,
+    paddingLeft: 25,
+    paddingRight: 25,
     minHeight: "calc(100vh - 105px)"
   }
 };
