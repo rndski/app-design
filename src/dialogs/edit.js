@@ -13,7 +13,7 @@ import { AppActions } from "../reducers/appReducer";
 const EditUser = React.memo(props => {
   const {
     edit,
-    edit: { open, user: item } //grabbing the edit.user property into item
+    edit: { open, user: item, isNew } //grabbing the edit.user property into item
   } = props;
 
   if (!open) return null;
@@ -46,6 +46,10 @@ const EditUser = React.memo(props => {
     setUser({ ...user, [e.target.id]: e.target.value });
   };
 
+  const contentText = isNew
+    ? "Enter new user's detials."
+    : "Modify the user's details.";
+
   return (
     <Dialog
       open={open}
@@ -57,7 +61,7 @@ const EditUser = React.memo(props => {
           {`${user.name.first} ${user.name.last}`}
         </DialogTitle>
         <DialogContent>
-          <DialogContentText>Modify the user's details.</DialogContentText>
+          <DialogContentText>{contentText}</DialogContentText>
           <TextField
             autoFocus
             margin="dense"
