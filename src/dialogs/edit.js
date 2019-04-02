@@ -29,7 +29,9 @@ const EditUser = React.memo(({ open, item }) => {
     });
   };
 
-  const handleSave = () => {
+  const handleSave = e => {
+    e.preventDefault();
+
     appDispatch({
       type: AppActions.SAVE,
       payload: {
@@ -56,45 +58,47 @@ const EditUser = React.memo(({ open, item }) => {
       onClose={handleClose}
       aria-labelledby="form-dialog-title"
     >
-      <DialogTitle id="form-dialog-title">
-        {`${user.name.first} ${user.name.last}`}
-      </DialogTitle>
-      <DialogContent>
-        <DialogContentText>Modify the user's details.</DialogContentText>
-        <TextField
-          autoFocus
-          margin="dense"
-          id="first"
-          label="first name"
-          type="text"
-          fullWidth
-          value={user.name.first}
-          onChange={onNameChange}
-        />
-        <TextField
-          margin="dense"
-          id="last"
-          label="last name"
-          type="text"
-          fullWidth
-          value={user.name.last}
-          onChange={onNameChange}
-        />
-        <TextField
-          margin="dense"
-          id="email"
-          label="email address"
-          type="email"
-          fullWidth
-          value={user.email}
-          onChange={onOtherChange}
-        />
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={handleSave} color="primary">
-          Save
-        </Button>
-      </DialogActions>
+      <form onSubmit={handleSave}>
+        <DialogTitle id="form-dialog-title">
+          {`${user.name.first} ${user.name.last}`}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>Modify the user's details.</DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="first"
+            label="first name"
+            type="text"
+            fullWidth
+            value={user.name.first}
+            onChange={onNameChange}
+          />
+          <TextField
+            margin="dense"
+            id="last"
+            label="last name"
+            type="text"
+            fullWidth
+            value={user.name.last}
+            onChange={onNameChange}
+          />
+          <TextField
+            margin="dense"
+            id="email"
+            label="email address"
+            type="email"
+            fullWidth
+            value={user.email}
+            onChange={onOtherChange}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button type="submit" onClick={handleSave} color="primary">
+            Save
+          </Button>
+        </DialogActions>
+      </form>
     </Dialog>
   );
 });

@@ -87,6 +87,7 @@ const User = React.memo(props => {
             Edit
           </Button>
           <Button
+            color="secondary"
             onClick={() => {
               deleteUser(item);
             }}
