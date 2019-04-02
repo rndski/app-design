@@ -42,7 +42,7 @@ const App = () => {
             message={appState.message}
             messageKey={appState.messageKey}
           />
-          <EditUser item={appState.edit.user} open={appState.edit.open} />
+          <EditUser edit={appState.edit} />
         </appContext.Provider>
       </MuiThemeProvider>
     </div>

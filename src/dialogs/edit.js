@@ -10,22 +10,20 @@ import Button from "@material-ui/core/Button";
 import appContext from "../context/app";
 import { AppActions } from "../reducers/appReducer";
 
-const EditUser = React.memo(({ open, item }) => {
+const EditUser = React.memo(props => {
+  const {
+    edit,
+    edit: { open, user: item } //grabbing the edit.user property into item
+  } = props;
+
   if (!open) return null;
 
-  const appDispatch = useContext(appContext);
-
   const [user, setUser] = useState(item);
+  const appDispatch = useContext(appContext);
 
   const handleClose = () => {
     appDispatch({
-      type: AppActions.EDIT,
-      payload: {
-        edit: {
-          user: {},
-          open: false
-        }
-      }
+      type: AppActions.CANCEL
     });
   };
 
@@ -35,10 +33,7 @@ const EditUser = React.memo(({ open, item }) => {
     appDispatch({
       type: AppActions.SAVE,
       payload: {
-        edit: {
-          user: { ...user },
-          open: false
-        },
+        edit: { ...edit, user },
         message: `${user.name.first} ${user.name.last} has been updated...`
       }
     });
@@ -51,7 +46,6 @@ const EditUser = React.memo(({ open, item }) => {
     setUser({ ...user, [e.target.id]: e.target.value });
   };
 
-  console.log("render");
   return (
     <Dialog
       open={open}
@@ -104,8 +98,7 @@ const EditUser = React.memo(({ open, item }) => {
 });
 
 EditUser.propTypes = {
-  item: PropTypes.object,
-  open: PropTypes.bool.isRequired
+  edit: PropTypes.object
 };
 
 export default EditUser;

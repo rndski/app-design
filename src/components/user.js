@@ -39,7 +39,7 @@ const User = React.memo(props => {
 
   const deleteUser = item => {
     appDispatch({
-      type: AppActions.DELETE,
+      type: AppActions.REMOVE,
       payload: {
         users: [item],
         message: `${item.name.first} ${item.name.last} has been deleted...`
@@ -52,8 +52,7 @@ const User = React.memo(props => {
       type: AppActions.EDIT,
       payload: {
         edit: {
-          user: item,
-          open: true
+          user: item
         }
       }
     });

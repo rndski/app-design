@@ -7,7 +7,6 @@ import { AppActions } from "../reducers/appReducer";
 import appContext from "../context/app";
 
 import loadUserData from "../data/loadUsers";
-import uuidv4 from "uuid/v4";
 
 const styles = {
   root: {
@@ -22,7 +21,7 @@ const Busy = ({ classes, count }) => {
   const appDispatch = useContext(appContext);
 
   useEffect(() => {
-    load(null, 25);
+    load(null, 50);
   }, []);
 
   const dispatchWithDelay = (type, payload, delay = 300) => {
@@ -54,36 +53,12 @@ const Busy = ({ classes, count }) => {
     }
   };
 
-  const add = () => {
-    appDispatch({ type: AppActions.BUSY, busy: true });
-
-    const payload = {
-      busy: false,
-      message: "Vaughan Koscinski has been added...",
-      users: [
-        {
-          name: { first: "Vaughan", last: "Koscinski" },
-          email: "boss@madden.com",
-          gender: "male",
-          login: { uuid: uuidv4() }
-        }
-      ]
-    };
-    dispatchWithDelay(AppActions.ADD, payload, 750);
+  const newUser = () => {
+    dispatchWithDelay(AppActions.NEW, {}, 0);
   };
 
-  const error = () => {
-    appDispatch({ type: AppActions.BUSY, busy: true });
-
-    const payload = {
-      message: `Testing the error reducer... :(`,
-      busy: false
-    };
-    dispatchWithDelay(AppActions.ERROR, payload, 3000);
-  };
   const clear = () => {
     const payload = {
-      users: [],
       message: "Users have been cleared..."
     };
 
@@ -96,14 +71,11 @@ const Busy = ({ classes, count }) => {
         <Button onClick={load} color="primary">
           Load
         </Button>
-        <Button onClick={add} color="primary">
-          Add
+        <Button onClick={newUser} color="primary">
+          New
         </Button>
         <Button onClick={clear} color="secondary">
           Clear
-        </Button>
-        <Button onClick={error} color="secondary">
-          Error
         </Button>
       </Paper>
     </React.Fragment>
