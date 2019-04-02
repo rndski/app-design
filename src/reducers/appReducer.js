@@ -1,4 +1,4 @@
-import uuidv4 from "uuid/v4";
+import loadUsers, { User } from "../data/loadUsers";
 
 export const appInitialState = {
   users: [],
@@ -8,7 +8,7 @@ export const appInitialState = {
   theme: null,
 
   edit: {
-    user: { name: {} },
+    user: {},
     open: false,
     isNew: false
   }
@@ -22,23 +22,10 @@ export const AppActions = {
   EDIT: "edit",
   CANCEL: "cancel",
   SAVE: "save",
+  LOAD: "load",
 
   ERROR: "error",
   BUSY: "busy"
-};
-
-const User = () => {
-  return {
-    email: "",
-    gender: "male",
-    name: {
-      last: "",
-      first: ""
-    },
-    login: {
-      uuid: uuidv4()
-    }
-  };
 };
 
 export const appReducer = (state, action) => {

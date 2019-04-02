@@ -47,7 +47,7 @@ const EditUser = React.memo(props => {
     setUser({ ...user, [e.target.id]: e.target.value });
   };
 
-  const contentText = isNew ? "Add user details" : "Change user details";
+  const contentText = isNew ? "New" : "Update";
 
   return (
     <Dialog
@@ -56,11 +56,11 @@ const EditUser = React.memo(props => {
       aria-labelledby="form-dialog-title"
     >
       <form onSubmit={handleSave}>
-        <DialogTitle id="form-dialog-title">
-          {`${user.name.first} ${user.name.last}`}
-        </DialogTitle>
+        <DialogTitle id="form-dialog-title">{contentText}</DialogTitle>
         <DialogContent>
-          <DialogContentText>{contentText}</DialogContentText>
+          <DialogContentText>{`${user.name.first} ${
+            user.name.last
+          }`}</DialogContentText>
           <TextField
             autoFocus
             margin="dense"

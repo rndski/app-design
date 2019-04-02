@@ -1,4 +1,19 @@
 import axios from "axios";
+import uuidv4 from "uuid/v4";
+
+export const User = () => {
+  return {
+    email: "",
+    gender: "male",
+    name: {
+      last: "",
+      first: ""
+    },
+    login: {
+      uuid: uuidv4()
+    }
+  };
+};
 
 const USER_URL = "https://randomuser.me/api/";
 
