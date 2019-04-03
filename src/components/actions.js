@@ -20,7 +20,7 @@ const Actions = ({ classes, count }) => {
   const appDispatch = useContext(appContext);
 
   useEffect(() => {
-    UserService.load(appDispatch, 1);
+    UserService.load(appDispatch, 50);
   }, []);
 
   return (
