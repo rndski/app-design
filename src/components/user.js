@@ -39,6 +39,13 @@ const User = React.memo(props => {
   const appDispatch = useContext(appContext);
   const [zoom, setZoom] = useState(true);
 
+  const onDelete = () => {
+    setZoom(false);
+    setTimeout(() => {
+      UserService.delete(appDispatch, item);
+    }, 250);
+  };
+
   return (
     <Grid item>
       <Zoom in={zoom}>
@@ -69,15 +76,7 @@ const User = React.memo(props => {
             >
               Edit
             </Button>
-            <Button
-              color="secondary"
-              onClick={() => {
-                setZoom(false);
-                setTimeout(() => {
-                  UserService.delete(appDispatch, item);
-                }, 250);
-              }}
-            >
+            <Button color="secondary" onClick={onDelete}>
               Delete
             </Button>
           </CardActions>
