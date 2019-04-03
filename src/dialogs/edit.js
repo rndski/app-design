@@ -8,7 +8,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import appContext from "../context/app";
-import { AppActions } from "../reducers/appReducer";
+import UserService, { AppActions } from "../data/service";
 
 const EditUser = React.memo(props => {
   const {
@@ -29,15 +29,7 @@ const EditUser = React.memo(props => {
 
   const handleSave = e => {
     e.preventDefault();
-
-    const messageText = isNew ? "has been created!" : "has been updated!";
-    appDispatch({
-      type: AppActions.SAVE,
-      payload: {
-        edit: { ...edit, user },
-        message: `${user.name.first} ${user.name.last} ${messageText}`
-      }
-    });
+    UserService.save(appDispatch, edit, user);
   };
 
   const onNameChange = e => {

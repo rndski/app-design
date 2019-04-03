@@ -13,7 +13,7 @@ import pink from "@material-ui/core/colors/pink";
 import blue from "@material-ui/core/colors/blue";
 
 import appContext from "../context/app";
-import { AppActions } from "../reducers/appReducer";
+import UserService from "../data/service";
 
 const styles = {
   card: {
@@ -37,27 +37,6 @@ const User = React.memo(props => {
   const { item, classes } = props;
   const appDispatch = useContext(appContext);
 
-  const deleteUser = item => {
-    appDispatch({
-      type: AppActions.REMOVE,
-      payload: {
-        users: [item],
-        message: `${item.name.first} ${item.name.last} has been deleted...`
-      }
-    });
-  };
-
-  const editUser = item => {
-    appDispatch({
-      type: AppActions.EDIT,
-      payload: {
-        edit: {
-          user: item
-        }
-      }
-    });
-  };
-
   return (
     <Grid item>
       <Card xs={12} sm={6} md={4} lg={4} className={classes.card}>
@@ -80,7 +59,7 @@ const User = React.memo(props => {
         <CardActions>
           <Button
             onClick={() => {
-              editUser(item);
+              UserService.edit(appDispatch, item);
             }}
           >
             Edit
@@ -88,7 +67,7 @@ const User = React.memo(props => {
           <Button
             color="secondary"
             onClick={() => {
-              deleteUser(item);
+              UserService.delete(appDispatch, item);
             }}
           >
             Delete

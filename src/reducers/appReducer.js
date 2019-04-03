@@ -1,4 +1,4 @@
-import loadUsers, { User } from "../data/loadUsers";
+import { AppActions, User } from "../data/service";
 
 export const appInitialState = {
   users: [],
@@ -12,20 +12,6 @@ export const appInitialState = {
     open: false,
     isNew: false
   }
-};
-
-export const AppActions = {
-  ADD: "add",
-  NEW: "new",
-  CLEAR: "clear",
-  REMOVE: "remove",
-  EDIT: "edit",
-  CANCEL: "cancel",
-  SAVE: "save",
-  LOAD: "load",
-
-  ERROR: "error",
-  BUSY: "busy"
 };
 
 export const appReducer = (state, action) => {

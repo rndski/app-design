@@ -5,7 +5,7 @@ import orange from "@material-ui/core/colors/orange";
 
 import Header from "./components/header";
 import Content from "./components/content";
-import Busy from "./components/busy";
+import Actions from "./components/actions";
 import ActionBar from "./components/actionBar";
 import Users from "./components/users";
 
@@ -35,7 +35,7 @@ const App = () => {
       <MuiThemeProvider theme={theme}>
         <appContext.Provider value={appDispatch}>
           <Header busy={appState.busy} count={appState.users.length}>
-            <Busy />
+            <Actions />
           </Header>
           <Content show={true}>
             <Users users={appState.users} />
