@@ -55,13 +55,13 @@ const UserService = {
         message: `Loaded ${res.data.results.length} new users...`,
         busy: false
       };
-      dispatchWithDelay(dispatch, AppActions.ADD, payload);
+      dispatch({ type: AppActions.ADD, payload });
     } catch (e) {
       const payload = {
         message: `Something went wrong with getting the users... :(`,
         busy: false
       };
-      dispatchWithDelay(dispatch, AppActions.ERROR, payload);
+      dispatch({ type: AppActions.ERROR, payload });
     }
   },
   save: (dispatch, edit, user) => {
@@ -94,12 +94,9 @@ const UserService = {
     });
   },
   new: dispatch => {
-    dispatchWithDelay(dispatch, AppActions.NEW, {}, 0);
+    dispatch({ type: AppActions.NEW, payload: {} });
   },
-
   clear: dispatch => {
-    console.log("clear");
-
     const payload = {
       message: "Users have been cleared..."
     };
