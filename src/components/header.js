@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import AppBar from "@material-ui/core/AppBar";
@@ -11,6 +11,9 @@ import Button from "@material-ui/core/Button";
 import Badge from "@material-ui/core/Badge";
 import PersonOutlineRounded from "@material-ui/icons/PersonOutlineRounded";
 import Tooltip from "@material-ui/core/Tooltip";
+
+import { appContext } from "../components/store";
+import { AppActions } from "../data/service";
 
 const styles = {
   root: {
@@ -29,6 +32,17 @@ const styles = {
 };
 
 const Header = ({ classes, children, count, busy }) => {
+  const appDispatch = useContext(appContext);
+
+  const onMenu = event => {
+    appDispatch({
+      type: AppActions.MENU,
+      payload: {
+        open: true,
+        anchor: event.target
+      }
+    });
+  };
   return (
     <div className={classes.root}>
       <AppBar position="fixed">
@@ -37,6 +51,7 @@ const Header = ({ classes, children, count, busy }) => {
             className={classes.menuButton}
             color="inherit"
             aria-label="Menu"
+            onClick={onMenu}
           >
             {busy ? (
               <CircularProgress size={24} color="inherit" />
@@ -70,7 +85,7 @@ const Header = ({ classes, children, count, busy }) => {
 Header.propTypes = {
   classes: PropTypes.object.isRequired,
   busy: PropTypes.bool.isRequired,
-  children: PropTypes.object,
+  children: PropTypes.array,
   count: PropTypes.number.isRequired
 };
 

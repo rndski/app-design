@@ -10,11 +10,11 @@ const styles = {
     marginTop: 95,
     paddingLeft: 25,
     paddingRight: 25,
-    minHeight: "calc(100vh - 105px)"
+    minHeight: "calc(100vh - 95px)"
   }
 };
 
-const Content = ({ classes, name, children, show }) => {
+const Content = ({ classes, name, children, show = true }) => {
   return show ? (
     <React.Fragment>
       <Paper className={classes.root} elevation={1}>
@@ -31,7 +31,7 @@ Content.propTypes = {
   classes: PropTypes.object.isRequired,
   name: PropTypes.string,
   children: PropTypes.object,
-  show: PropTypes.bool.isRequired
+  show: PropTypes.bool
 };
 
 export default withStyles(styles)(Content);

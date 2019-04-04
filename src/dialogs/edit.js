@@ -7,7 +7,8 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import appContext from "../context/app";
+
+import { appContext } from "../components/store";
 import UserService, { AppActions } from "../data/service";
 
 const EditUser = React.memo(props => {
@@ -39,7 +40,7 @@ const EditUser = React.memo(props => {
     setUser({ ...user, [e.target.id]: e.target.value });
   };
 
-  const contentText = isNew ? "New" : "Update";
+  const contentText = isNew ? "New" : "Edit";
 
   return (
     <Dialog

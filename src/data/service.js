@@ -10,9 +10,11 @@ export const AppActions = {
   CANCEL: "cancel",
   SAVE: "save",
   LOAD: "load",
+  THEME: "theme",
 
   ERROR: "error",
-  BUSY: "busy"
+  BUSY: "busy",
+  MENU: "menu"
 };
 export const User = () => {
   return {
@@ -27,7 +29,7 @@ export const User = () => {
     }
   };
 };
-const dispatchWithDelay = (dispatch, type, payload, delay = 300) => {
+const dispatchWithDelay = (dispatch, type, payload = {}, delay = 300) => {
   setTimeout(() => {
     dispatch({
       type,
@@ -52,7 +54,7 @@ const UserService = {
       const res = await loadUserData(count || 10);
       const payload = {
         users: res.data.results,
-        message: `Loaded ${res.data.results.length} new users...`,
+        message: `Loaded ${res.data.results.length} users!`,
         busy: false
       };
       dispatch({ type: AppActions.ADD, payload });
@@ -78,8 +80,10 @@ const UserService = {
     dispatch({
       type: AppActions.REMOVE,
       payload: {
-        users: [item],
-        message: `${item.name.first} ${item.name.last} has been deleted...`
+        users: [
+          item
+        ] /*,
+        message: `${item.name.first} ${item.name.last} has been deleted...`*/
       }
     });
   },
@@ -94,15 +98,13 @@ const UserService = {
     });
   },
   new: dispatch => {
-    dispatch({ type: AppActions.NEW, payload: {} });
+    dispatch({ type: AppActions.NEW });
   },
   clear: dispatch => {
-    const payload = {
-      message: "Users have been cleared..."
-    };
-
-    dispatchWithDelay(dispatch, AppActions.CLEAR, payload);
+    dispatchWithDelay(dispatch, AppActions.CLEAR);
   }
 };
+
+Object.freeze(UserService);
 
 export default UserService;

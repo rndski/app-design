@@ -5,12 +5,16 @@ export const appInitialState = {
   busy: false,
   message: "",
   messageKey: 0,
-  theme: null,
 
   edit: {
     user: {},
     open: false,
     isNew: false
+  },
+
+  menu: {
+    open: false,
+    anchor: null
   }
 };
 
@@ -45,6 +49,8 @@ export const appReducer = (state, action) => {
       return { ...state, busy: action.busy };
     case AppActions.ERROR:
       return { ...state, ...action.payload, messageKey: state.messageKey + 1 };
+    case AppActions.MENU:
+      return { ...state, menu: { ...action.payload } };
     default:
       return state;
   }

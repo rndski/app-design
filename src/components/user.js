@@ -13,7 +13,7 @@ import Zoom from "@material-ui/core/Zoom";
 import pink from "@material-ui/core/colors/pink";
 import blue from "@material-ui/core/colors/blue";
 
-import appContext from "../context/app";
+import { appContext } from "./store";
 import UserService from "../data/service";
 
 const styles = {

@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
-import appContext from "../context/app";
-
+import { appContext } from "../components/store";
 import UserService from "../data/service";
 
 const styles = {

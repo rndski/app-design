@@ -1,0 +1,3 @@
+* Formik, Yup form validation
+* Detail view
+* Tests
