@@ -5,6 +5,12 @@ import User from "./user";
 import Grid from "@material-ui/core/Grid";
 
 const Users = ({ users }) => {
+  const filtered = users;
+
+  // const filtered = users.filter(item => {
+  //   return item.gender === "female";
+  // });
+
   return (
     <div style={{ paddingTop: 25, paddingBottom: 25 }}>
       <Grid
@@ -12,10 +18,10 @@ const Users = ({ users }) => {
         direction="row"
         justify="center"
         alignItems="stretch"
-        alignContent="space-around"
+        alignContent="space-between"
         spacing={32}
       >
-        {users.map(item => {
+        {filtered.map(item => {
           return <User key={item.login.uuid} item={item} />;
         })}
       </Grid>

@@ -11,21 +11,32 @@ export const AppActions = {
   SAVE: "save",
   LOAD: "load",
   THEME: "theme",
+  POPOVER: "popover",
 
   ERROR: "error",
   BUSY: "busy",
   MENU: "menu"
 };
+
 export const User = () => {
   return {
-    email: "",
-    gender: "male",
-    name: {
-      last: "",
-      first: ""
+    gender: "",
+    name: { title: "", first: "", last: "" },
+    location: {
+      street: "",
+      city: "",
+      state: "",
+      postcode: ""
     },
+    email: "",
     login: {
       uuid: uuidv4()
+    },
+    dob: { date: "", age: 0 },
+    picture: {
+      large: "",
+      medium: "",
+      thumbnail: ""
     }
   };
 };
@@ -39,10 +50,11 @@ const dispatchWithDelay = (dispatch, type, payload = {}, delay = 300) => {
 };
 
 const USER_URL = "https://randomuser.me/api/";
+const EXCLUSIONS = "&exc=registered,phone,cell,nat,id";
 
 const loadUserData = async count => {
   if (count === undefined) count = 5;
-  let url = `${USER_URL}?results=${count}`;
+  let url = `${USER_URL}?results=${count}${EXCLUSIONS}`;
   return await axios.get(url, { headers: { mode: "no-cors" } });
 };
 

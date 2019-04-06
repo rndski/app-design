@@ -15,6 +15,12 @@ export const appInitialState = {
   menu: {
     open: false,
     anchor: null
+  },
+
+  popover: {
+    open: false,
+    image: "",
+    anchor: {}
   }
 };
 
@@ -51,6 +57,8 @@ export const appReducer = (state, action) => {
       return { ...state, ...action.payload, messageKey: state.messageKey + 1 };
     case AppActions.MENU:
       return { ...state, menu: { ...action.payload } };
+    case AppActions.POPOVER:
+      return popover(state, action);
     default:
       return state;
   }
@@ -76,6 +84,19 @@ const edit = (state, action) => {
     }
   };
 };
+
+const popover = (state, action) => {
+  let open = !state.popover.open;
+  return {
+    ...state,
+    popover: {
+      image: action.payload ? action.payload.image : "",
+      open: open,
+      anchor: action.payload ? action.payload.anchor : {}
+    }
+  };
+};
+
 const save = (state, action) => {
   if (action.payload.edit.isNew) {
     return {

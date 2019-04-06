@@ -1,5 +1,6 @@
 import React from "react";
 import "./App.css";
+import UserPopover from "./components/popover";
 
 import Header from "./components/header";
 import Content from "./components/content";
@@ -24,6 +25,11 @@ const App = ({ appState }) => {
       </Content>
       <ActionBar message={appState.message} messageKey={appState.messageKey} />
       <EditUser edit={appState.edit} />
+      <UserPopover
+        open={appState.popover.open}
+        image={appState.popover.image}
+        anchor={appState.popover.anchor}
+      />
     </div>
   );
 };

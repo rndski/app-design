@@ -29,7 +29,6 @@ const Actions = ({ classes, count }) => {
           onClick={() => {
             UserService.load(appDispatch);
           }}
-          color="primary"
         >
           Load
         </Button>
@@ -37,7 +36,6 @@ const Actions = ({ classes, count }) => {
           onClick={() => {
             UserService.new(appDispatch);
           }}
-          color="primary"
         >
           New
         </Button>

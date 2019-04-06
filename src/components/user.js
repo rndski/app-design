@@ -14,12 +14,14 @@ import pink from "@material-ui/core/colors/pink";
 import blue from "@material-ui/core/colors/blue";
 
 import { appContext } from "./store";
-import UserService from "../data/service";
+import UserService, { AppActions } from "../data/service";
+import { Typography } from "@material-ui/core";
 
 const styles = {
   card: {
     width: 325,
-    textAlign: "left"
+    textAlign: "left",
+    textTransform: "capitalize"
   },
   actions: {
     display: "flex-grow"
@@ -45,7 +47,12 @@ const User = React.memo(props => {
       UserService.delete(appDispatch, item);
     }, 250);
   };
-
+  const openProfilePic = e => {
+    appDispatch({
+      type: AppActions.POPOVER,
+      payload: { anchor: e.target, image: item.picture.large }
+    });
+  };
   return (
     <Grid item>
       <Zoom in={zoom}>
@@ -53,19 +60,21 @@ const User = React.memo(props => {
           <CardHeader
             avatar={
               <Avatar
-                className={
-                  item.gender === "male"
-                    ? classes.blueAvatar
-                    : classes.pinkAvatar
-                }
+                onClick={openProfilePic}
                 aria-label=""
-              >
-                {item.name.last[0].toUpperCase()}
-              </Avatar>
+                src={item.picture.large}
+              />
             }
-            action={<React.Fragment />}
-            title={`${item.name.first} ${item.name.last}`}
-            subheader={item.email}
+            title={
+              <Typography variant="inherit">{`${item.name.first} ${
+                item.name.last
+              }`}</Typography>
+            }
+            subheader={
+              <Typography color="textSecondary" variant="subtitle2">
+                {item.dob.age}
+              </Typography>
+            }
           />
 
           <CardActions>
@@ -74,7 +83,7 @@ const User = React.memo(props => {
                 UserService.edit(appDispatch, item);
               }}
             >
-              Edit
+              Details
             </Button>
             <Button color="secondary" onClick={onDelete}>
               Delete

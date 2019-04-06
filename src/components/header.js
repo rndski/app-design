@@ -64,11 +64,7 @@ const Header = ({ classes, children, count, busy }) => {
             Users
           </Typography>
           <div className={classes.users}>
-            <Badge
-              className={classes.badge}
-              badgeContent={count}
-              color="secondary"
-            >
+            <Badge badgeContent={count} color="secondary">
               <PersonOutlineRounded />
             </Badge>
           </div>

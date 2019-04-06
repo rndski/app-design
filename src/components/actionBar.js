@@ -33,7 +33,7 @@ const ActionBar = React.memo(props => {
       ContentProps={{
         "aria-describedby": "message-id"
       }}
-      autoHideDuration={1500}
+      autoHideDuration={2500}
       onClose={onClose}
       action={[
         <IconButton
