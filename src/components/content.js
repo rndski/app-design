@@ -8,9 +8,9 @@ const styles = {
   root: {
     backgroundColor: "#f5f5f5",
     marginTop: 95,
-    paddingLeft: 15,
-    paddingRight: 15,
-    minHeight: "calc(100vh - 95px)"
+    paddingLeft: 20,
+    paddingRight: 20,
+    minHeight: "calc(100vh - 112px)"
   }
 };
 
