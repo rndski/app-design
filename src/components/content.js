@@ -10,7 +10,7 @@ const styles = {
     marginTop: 95,
     paddingLeft: 20,
     paddingRight: 20,
-    minHeight: "calc(100vh - 112px)"
+    minHeight: "calc(100vh - 95px)"
   }
 };
 
