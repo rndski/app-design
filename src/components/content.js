@@ -30,7 +30,6 @@ const Content = ({ classes, name, children, show = true }) => {
 Content.propTypes = {
   classes: PropTypes.object.isRequired,
   name: PropTypes.string,
-  children: PropTypes.object,
   show: PropTypes.bool
 };
 

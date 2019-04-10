@@ -7,6 +7,7 @@ import Content from "./components/content";
 import Actions from "./components/actions";
 import ActionBar from "./components/actionBar";
 import Users from "./components/users";
+//import ThemeProvider from "./providers/theme";
 
 import EditUser from "./dialogs/edit";
 import { CssBaseline } from "@material-ui/core";
@@ -21,6 +22,7 @@ const App = ({ appState }) => {
         <UserMenu anchor={appState.menu.anchor} open={appState.menu.open} />
       </Header>
       <Content>
+        {/* <ThemeProvider /> */}
         <Users users={appState.users} />
       </Content>
       <ActionBar message={appState.message} messageKey={appState.messageKey} />
