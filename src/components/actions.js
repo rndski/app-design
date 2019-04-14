@@ -1,9 +1,10 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import { compose } from "redux";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
-import { appContext } from "../components/store";
 import UserService from "../data/service";
 
 const styles = {
@@ -15,11 +16,9 @@ const styles = {
   }
 };
 
-const Actions = ({ classes, count }) => {
-  const appDispatch = useContext(appContext);
-
+const Actions = ({ classes, dispatch }) => {
   useEffect(() => {
-    UserService.load(appDispatch, 50);
+    UserService.load(dispatch, 2);
   }, []);
 
   return (
@@ -27,21 +26,21 @@ const Actions = ({ classes, count }) => {
       <Paper className={classes.root} square={true} elevation={0}>
         <Button
           onClick={() => {
-            UserService.load(appDispatch);
+            UserService.load(dispatch);
           }}
         >
           Load
         </Button>
         <Button
           onClick={() => {
-            UserService.new(appDispatch);
+            UserService.new(dispatch);
           }}
         >
           New
         </Button>
         <Button
           onClick={() => {
-            UserService.clear(appDispatch);
+            UserService.clear(dispatch);
           }}
           color="secondary"
         >
@@ -56,4 +55,7 @@ Actions.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(Actions);
+export default compose(
+  connect(),
+  withStyles(styles)
+)(Actions);

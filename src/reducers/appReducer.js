@@ -1,4 +1,5 @@
 import { AppActions, User } from "../data/service";
+import { combineReducers, createStore } from "redux";
 
 export const appInitialState = {
   users: [],
@@ -23,6 +24,66 @@ export const appInitialState = {
     anchor: {}
   }
 };
+
+const appXInitialState = {
+  busy: false,
+  message: "",
+  messageKey: 0
+};
+
+const popoverInitialState = {
+  open: false,
+  anchor: {},
+  image: ""
+};
+
+// const menuInitialState = {
+//   open: false
+// };
+
+const appXReducer = (state = appXInitialState, action) => {
+  switch (action.type) {
+    case AppActions.BUSY:
+      return { busy: !state.busy };
+    default:
+      return state;
+  }
+};
+
+export const OPEN_MENU = "open-menu";
+export const CLOSE_MENU = "close-menu";
+
+// const menuReducer = (state = menuInitialState, action) => {
+//   console.log("menuReducer...", state, action);
+//   let newState = state;
+
+//   switch (action.type) {
+//     case OPEN_MENU:
+//       newState = { open: true, ...action.payload };
+//       break;
+//     case CLOSE_MENU:
+//       newState = { open: false };
+//       break;
+//     default:
+//       return state;
+//   }
+
+//   console.log("menu", newState);
+//   return newState;
+// };
+
+const popoverReducer = (state = popoverInitialState, action) => {
+  console.log("popoverReducer...", state, action);
+  return state;
+};
+
+// const rootReducer = combineReducers({
+//   app: appXReducer,
+//   menu: menuReducer,
+//   popover: popoverReducer
+// });
+
+// export const AppStore = createStore(rootReducer);
 
 export const appReducer = (state, action) => {
   //console.log(`Reduce[${action.type}]`);

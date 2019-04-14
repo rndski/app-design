@@ -1,12 +1,13 @@
-import React, { useContext } from "react";
+import React from "react";
+import { connect } from "react-redux";
+import { compose } from "redux";
+
 import { withStyles } from "@material-ui/core/styles";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import { appContext, themeContext } from "../components/store";
-import { userThemes } from "../reducers/themeReducer";
-
-import { AppActions } from "../data/service";
+import { useTheme, userThemes, CHANGE_THEME } from "../providers/theme";
 import Avatar from "@material-ui/core/Avatar";
+import { CLOSE_MENU } from "../reducers/menu";
 
 const styles = {
   avatar: {
@@ -16,19 +17,13 @@ const styles = {
   }
 };
 
-const UserMenu = ({ anchor, open, classes }) => {
-  const appDispatch = useContext(appContext);
-  const themeDispatch = useContext(themeContext);
-
+const UserMenu = ({ anchor, open, classes, dispatch }) => {
   const handleClose = () => {
-    appDispatch({
-      type: AppActions.MENU,
-      payload: {
-        open: false,
-        anchor: null
-      }
-    });
+    dispatch({ type: CLOSE_MENU });
   };
+
+  const [theme, themeDispatch] = useTheme();
+  console.log(theme);
 
   return (
     <div>
@@ -44,7 +39,7 @@ const UserMenu = ({ anchor, open, classes }) => {
             <MenuItem
               key={item.name}
               onClick={() => {
-                themeDispatch({ type: item.name });
+                themeDispatch({ type: CHANGE_THEME, payload: item.name });
                 handleClose();
               }}
             >
@@ -61,4 +56,14 @@ const UserMenu = ({ anchor, open, classes }) => {
   );
 };
 
-export default withStyles(styles)(UserMenu);
+const mapStateToProps = state => {
+  return {
+    open: state.menu.open,
+    anchor: state.menu.anchor
+  };
+};
+
+export default compose(
+  connect(mapStateToProps),
+  withStyles(styles)
+)(UserMenu);

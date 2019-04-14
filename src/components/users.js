@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import User from "./user";
@@ -27,8 +28,13 @@ const Users = ({ users }) => {
   );
 };
 
+const mapStateToProps = state => {
+  return {
+    users: state.data.users
+  };
+};
 Users.propTypes = {
   users: PropTypes.array.isRequired
 };
 
-export default Users;
+export default connect(mapStateToProps)(Users);

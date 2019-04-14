@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { compose } from "redux";
 import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import IconButton from "@material-ui/core/IconButton";
@@ -12,12 +14,12 @@ const styles = {
 };
 
 const ActionBar = React.memo(props => {
-  const { message = "", messageKey, classes } = props;
+  const { message = "", classes } = props;
   const [open, setOpen] = useState(true);
 
   useEffect(() => {
     setOpen(true);
-  }, [messageKey, message]);
+  }, [message]);
 
   const onClose = (e, r) => {
     setOpen(false);
@@ -51,10 +53,18 @@ const ActionBar = React.memo(props => {
   );
 });
 
-ActionBar.propTypes = {
-  classes: PropTypes.object.isRequired,
-  message: PropTypes.string.isRequired,
-  messageKey: PropTypes.number.isRequired
+const mapStateToProps = state => {
+  return {
+    message: state.app.message
+  };
 };
 
-export default withStyles(styles)(ActionBar);
+ActionBar.propTypes = {
+  classes: PropTypes.object.isRequired,
+  message: PropTypes.string
+};
+
+export default compose(
+  connect(mapStateToProps),
+  withStyles(styles)
+)(ActionBar);

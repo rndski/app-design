@@ -1,4 +1,7 @@
-import React, { useContext } from "react";
+import React from "react";
+import { connect } from "react-redux";
+import { compose } from "redux";
+
 import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import AppBar from "@material-ui/core/AppBar";
@@ -12,8 +15,7 @@ import Badge from "@material-ui/core/Badge";
 import PersonOutlineRounded from "@material-ui/icons/PersonOutlineRounded";
 import Tooltip from "@material-ui/core/Tooltip";
 
-import { appContext } from "../components/store";
-import { AppActions } from "../data/service";
+import { OPEN_MENU } from "../reducers/menu";
 
 const styles = {
   root: {
@@ -31,17 +33,9 @@ const styles = {
   }
 };
 
-const Header = ({ classes, children, count, busy }) => {
-  const appDispatch = useContext(appContext);
-
+const Header = ({ classes, children, count, busy, dispatch }) => {
   const onMenu = event => {
-    appDispatch({
-      type: AppActions.MENU,
-      payload: {
-        open: true,
-        anchor: event.target
-      }
-    });
+    dispatch({ type: OPEN_MENU, payload: { anchor: event.target } });
   };
   return (
     <div className={classes.root}>
@@ -81,8 +75,17 @@ const Header = ({ classes, children, count, busy }) => {
 Header.propTypes = {
   classes: PropTypes.object.isRequired,
   busy: PropTypes.bool.isRequired,
-  children: PropTypes.array,
   count: PropTypes.number.isRequired
 };
 
-export default withStyles(styles)(Header);
+const mapStateToProps = state => {
+  return {
+    count: state.data.users.length,
+    busy: state.app.busy
+  };
+};
+
+export default compose(
+  connect(mapStateToProps),
+  withStyles(styles)
+)(Header);

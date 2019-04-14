@@ -1,27 +1,34 @@
-import React, { useReducer, createContext } from "react";
-import { MuiThemeProvider } from "@material-ui/core";
+import React, { createContext } from "react";
+import { Provider } from "react-redux";
+import { combineReducers, createStore } from "redux";
 
-import themeReducer, { themeInitialState } from "../reducers/themeReducer";
-import appReducer, { appInitialState } from "../reducers/appReducer";
+import ThemeProvider from "../providers/theme";
 import App from "../App";
 
-export const themeContext = createContext();
+import menuReducer from "../reducers/menu";
+import appReducer from "../reducers/app";
+import dataReducer from "../reducers/data";
+import popoverReducer from "../reducers/popover";
+import editReducer from "../reducers/edit";
+
+const rootReducer = combineReducers({
+  menu: menuReducer,
+  app: appReducer,
+  data: dataReducer,
+  popover: popoverReducer,
+  edit: editReducer
+});
+
+const store = createStore(rootReducer);
+
 export const appContext = createContext();
 
 export default props => {
-  const [appState, appDispatch] = useReducer(appReducer, appInitialState);
-  const [themeState, themeDispatch] = useReducer(
-    themeReducer,
-    themeInitialState
-  );
-
   return (
-    <themeContext.Provider value={themeDispatch}>
-      <MuiThemeProvider theme={themeState.theme}>
-        <appContext.Provider value={appDispatch}>
-          <App appState={appState}>{props.children}</App>
-        </appContext.Provider>
-      </MuiThemeProvider>
-    </themeContext.Provider>
+    <Provider store={store}>
+      <ThemeProvider>
+        <App>{props.children}</App>
+      </ThemeProvider>
+    </Provider>
   );
 };

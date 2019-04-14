@@ -1,7 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
+import { connect } from "react-redux";
+import { compose } from "redux";
+
 import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 
+import { Typography } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -13,9 +17,8 @@ import Zoom from "@material-ui/core/Zoom";
 import pink from "@material-ui/core/colors/pink";
 import blue from "@material-ui/core/colors/blue";
 
-import { appContext } from "./store";
-import UserService, { AppActions } from "../data/service";
-import { Typography } from "@material-ui/core";
+import UserService from "../data/service";
+import { OPEN_PROFILE_PIC } from "../reducers/popover";
 
 const styles = {
   card: {
@@ -37,19 +40,18 @@ const styles = {
 };
 
 const User = React.memo(props => {
-  const { item, classes } = props;
-  const appDispatch = useContext(appContext);
+  const { item, classes, dispatch } = props;
   const [zoom, setZoom] = useState(true);
 
   const onDelete = () => {
     setZoom(false);
     setTimeout(() => {
-      UserService.delete(appDispatch, item);
+      UserService.delete(dispatch, item);
     }, 250);
   };
   const openProfilePic = e => {
-    appDispatch({
-      type: AppActions.POPOVER,
+    dispatch({
+      type: OPEN_PROFILE_PIC,
       payload: { anchor: e.target, image: item.picture.large }
     });
   };
@@ -80,7 +82,7 @@ const User = React.memo(props => {
           <CardActions>
             <Button
               onClick={() => {
-                UserService.edit(appDispatch, item);
+                UserService.edit(dispatch, item);
               }}
             >
               Details
@@ -100,4 +102,7 @@ User.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(User);
+export default compose(
+  connect(),
+  withStyles(styles)
+)(User);

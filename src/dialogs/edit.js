@@ -1,6 +1,9 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
+import { connect } from "react-redux";
+import { compose } from "redux";
 import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
+
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -10,11 +13,12 @@ import Avatar from "@material-ui/core/Avatar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 
-import { appContext } from "../components/store";
-import UserService, { AppActions } from "../data/service";
+import UserService from "../data/service";
 import { Typography, Slide } from "@material-ui/core";
 import UserGeneral from "./general";
 import UserAddress from "./address";
+
+import { EDIT_CANCEL } from "../reducers/edit";
 
 const styles = {
   avatar: {
@@ -47,27 +51,23 @@ function TabContainer(props) {
 }
 
 const EditUser = React.memo(props => {
-  const {
-    edit,
-    edit: { open, user: item /*, isNew*/ }, //grabbing the edit.user property into item
-    classes
-  } = props;
+  const { dispatch, classes, edit } = props;
+  const { open } = edit;
 
   if (!open) return null;
 
-  const [user, setUser] = useState(item);
+  const [user, setUser] = useState(edit.user);
   const [activeTab, setActiveTab] = useState(0);
-  const appDispatch = useContext(appContext);
 
   const handleClose = () => {
-    appDispatch({
-      type: AppActions.CANCEL
+    dispatch({
+      type: EDIT_CANCEL
     });
   };
 
   const handleSave = e => {
     e.preventDefault();
-    UserService.save(appDispatch, edit, user);
+    UserService.save(dispatch, edit, user);
   };
 
   const onTabChange = (e, tab) => {
@@ -176,8 +176,16 @@ const EditUser = React.memo(props => {
   );
 });
 
+const mapStateToProps = state => {
+  return {
+    edit: state.edit
+  };
+};
 EditUser.propTypes = {
   edit: PropTypes.object
 };
 
-export default withStyles(styles)(EditUser);
+export default compose(
+  connect(mapStateToProps),
+  withStyles(styles)
+)(EditUser);
