@@ -76,16 +76,16 @@ const greenTheme = createMuiTheme({
 const getTheme = name => {
   switch (name) {
     case BLUE_THEME:
-      return { theme: blueTheme };
+      return { theme: blueTheme, name };
     case PURPLE_THEME:
-      return { theme: purpleTheme };
+      return { theme: purpleTheme, name };
     case GREY_THEME:
-      return { theme: greyTheme };
+      return { theme: greyTheme, name };
     case GREEN_THEME:
-      return { theme: greenTheme };
+      return { theme: greenTheme, name };
     case ORANGE_THEME:
     default:
-      return { theme: orangeTheme };
+      return { theme: orangeTheme, name };
   }
 };
 

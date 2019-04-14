@@ -13,13 +13,10 @@ const styles = {
   }
 };
 
-const ActionBar = React.memo(props => {
-  const { message = "", classes } = props;
-  const [open, setOpen] = useState(true);
+const ActionBar = React.memo(({ message, classes }) => {
+  if (message === undefined) return null;
 
-  useEffect(() => {
-    setOpen(true);
-  }, [message]);
+  const [open, setOpen] = useState(true);
 
   const onClose = (e, r) => {
     setOpen(false);
@@ -27,7 +24,7 @@ const ActionBar = React.memo(props => {
 
   return (
     <Snackbar
-      open={open && message.length > 0}
+      open={open}
       anchorOrigin={{
         vertical: "top",
         horizontal: "center"

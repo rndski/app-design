@@ -15,7 +15,7 @@ const UserPopover = ({ open, image, anchor, dispatch }) => {
   };
   return (
     <Popover open={open} anchorEl={anchor} onClose={onClose}>
-      <CardMedia style={{ height: 250, width: 250 }} image={image} />
+      <CardMedia style={{ height: 275, width: 275, margin: 3 }} image={image} />
     </Popover>
   );
 };
@@ -27,6 +27,7 @@ const mapStateToProps = state => {
     image: state.popover.image
   };
 };
+
 UserPopover.propTypes = {
   open: propTypes.bool.isRequired,
   image: propTypes.string.isRequired,

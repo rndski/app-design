@@ -23,7 +23,7 @@ const UserMenu = ({ anchor, open, classes, dispatch }) => {
     dispatch({ type: CLOSE_MENU });
   };
 
-  const [, themeDispatch] = useTheme();
+  const [themeState, themeDispatch] = useTheme();
 
   return (
     <div>
@@ -38,6 +38,7 @@ const UserMenu = ({ anchor, open, classes, dispatch }) => {
           return (
             <MenuItem
               key={item.name}
+              selected={item.name === themeState.name}
               onClick={() => {
                 themeDispatch({ type: CHANGE_THEME, payload: item.name });
                 handleClose();
