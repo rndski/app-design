@@ -1,4 +1,5 @@
 import React from "react";
+import propTypes from "prop-types";
 import { connect } from "react-redux";
 import { compose } from "redux";
 
@@ -22,8 +23,7 @@ const UserMenu = ({ anchor, open, classes, dispatch }) => {
     dispatch({ type: CLOSE_MENU });
   };
 
-  const [theme, themeDispatch] = useTheme();
-  console.log(theme);
+  const [, themeDispatch] = useTheme();
 
   return (
     <div>
@@ -63,6 +63,11 @@ const mapStateToProps = state => {
   };
 };
 
+UserMenu.propTypes = {
+  open: propTypes.bool,
+  anchor: propTypes.object,
+  classes: propTypes.object.isRequired
+};
 export default compose(
   connect(mapStateToProps),
   withStyles(styles)

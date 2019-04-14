@@ -33,12 +33,14 @@ export const User = () => {
   };
 };
 const dispatchWithDelay = (dispatch, type, payload = {}, delay = 300) => {
-  setTimeout(() => {
-    dispatch({
-      type,
-      payload
-    });
-  }, delay);
+  if (delay === 0) dispatch({ type, payload });
+  else
+    setTimeout(() => {
+      dispatch({
+        type,
+        payload
+      });
+    }, delay);
 };
 
 const USER_URL = "https://randomuser.me/api/";
@@ -111,7 +113,7 @@ const UserService = {
     dispatch({ type: EDIT_USER, payload: { user: new User(), isNew: true } });
   },
   clear: dispatch => {
-    dispatchWithDelay(dispatch, CLEAR_USERS);
+    dispatchWithDelay(dispatch, CLEAR_USERS, 500);
   }
 };
 

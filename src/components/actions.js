@@ -18,7 +18,7 @@ const styles = {
 
 const Actions = ({ classes, dispatch }) => {
   useEffect(() => {
-    UserService.load(dispatch, 2);
+    UserService.load(dispatch, 50);
   }, []);
 
   return (
