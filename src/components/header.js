@@ -33,7 +33,7 @@ const styles = {
   }
 };
 
-const Header = ({ classes, children, count, busy, dispatch }) => {
+const Header = ({ classes, children, count, busy, dispatch, strings }) => {
   const onMenu = event => {
     dispatch({ type: OPEN_MENU, payload: { anchor: event.target } });
   };
@@ -50,15 +50,15 @@ const Header = ({ classes, children, count, busy, dispatch }) => {
         </IconButton>
 
         <Typography variant="h6" color="inherit">
-          Users
+          {strings.title}
         </Typography>
         <div className={classes.users}>
           <Badge badgeContent={count} color="secondary">
             <PersonOutlineRounded />
           </Badge>
         </div>
-        <Tooltip title="Coming Soon!" aria-label="Coming Soon!">
-          <Button color="inherit">Login</Button>
+        <Tooltip title={strings.soon} aria-label={strings.soon}>
+          <Button color="inherit">{strings.login}</Button>
         </Tooltip>
       </Toolbar>
       {children}
@@ -75,7 +75,8 @@ Header.propTypes = {
 const mapStateToProps = state => {
   return {
     count: state.data.users.length,
-    busy: state.app.busy
+    busy: state.app.busy,
+    strings: state.strings.header
   };
 };
 

@@ -1,13 +1,14 @@
 import React from "react";
+import { connect } from "react-redux";
 import propTypes from "prop-types";
 import TextField from "@material-ui/core/TextField";
 
-const UserGeneral = ({ user, onChange }) => {
+const UserGeneral = ({ user, onChange, strings }) => {
   return (
     <React.Fragment>
       <TextField
         id="first"
-        label="first name"
+        label={strings.firstName}
         type="text"
         fullWidth
         required
@@ -16,7 +17,7 @@ const UserGeneral = ({ user, onChange }) => {
       />
       <TextField
         id="last"
-        label="last name"
+        label={strings.lastName}
         type="text"
         fullWidth
         required
@@ -25,7 +26,7 @@ const UserGeneral = ({ user, onChange }) => {
       />
       <TextField
         id="gender"
-        label="gender"
+        label={strings.gender}
         type="text"
         fullWidth
         required
@@ -34,7 +35,7 @@ const UserGeneral = ({ user, onChange }) => {
       />
       <TextField
         id="email"
-        label="email address"
+        label={strings.email}
         type="email"
         fullWidth
         value={user.email}
@@ -42,21 +43,23 @@ const UserGeneral = ({ user, onChange }) => {
       />
       <TextField
         id="date"
-        label="dob"
+        label={strings.dob}
         type="date"
         fullWidth
         value={user.dob.date.split("T")[0]}
         onChange={onChange}
-        InputProps={{
-          readOnly: true
-        }}
       />
     </React.Fragment>
   );
 };
 
+const mapStateToProps = state => {
+  return {
+    strings: state.strings.general
+  };
+};
 UserGeneral.propTypes = {
   user: propTypes.object.isRequired
 };
 
-export default UserGeneral;
+export default connect(mapStateToProps)(UserGeneral);

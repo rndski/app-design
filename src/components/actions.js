@@ -16,46 +16,57 @@ const styles = {
   }
 };
 
-const Actions = ({ classes, dispatch }) => {
+const Actions = ({ classes, dispatch, strings }) => {
   useEffect(() => {
     UserService.load(dispatch, 50);
   }, []);
 
+  const actions = [
+    {
+      action: () => {
+        UserService.load(dispatch);
+      },
+      text: strings.load,
+      color: "primary"
+    },
+    {
+      action: () => {
+        UserService.new(dispatch);
+      },
+      text: strings.new,
+      color: "primary"
+    },
+    {
+      action: () => {
+        UserService.clear(dispatch);
+      },
+      text: strings.clear,
+      color: "secondary"
+    }
+  ];
   return (
-    <React.Fragment>
-      <Paper className={classes.root} square={true} elevation={0}>
-        <Button
-          onClick={() => {
-            UserService.load(dispatch);
-          }}
-        >
-          Load
-        </Button>
-        <Button
-          onClick={() => {
-            UserService.new(dispatch);
-          }}
-        >
-          New
-        </Button>
-        <Button
-          onClick={() => {
-            UserService.clear(dispatch);
-          }}
-          color="secondary"
-        >
-          Clear
-        </Button>
-      </Paper>
-    </React.Fragment>
+    <Paper className={classes.root} square={true} elevation={0}>
+      {actions.map(item => {
+        return (
+          <Button key={item.text} color={item.color} onClick={item.action}>
+            {item.text}
+          </Button>
+        );
+      })}
+    </Paper>
   );
 };
 
+const mapStateToProps = state => {
+  return {
+    strings: state.strings.actions
+  };
+};
 Actions.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
 export default compose(
-  connect(),
+  connect(mapStateToProps),
   withStyles(styles)
 )(Actions);

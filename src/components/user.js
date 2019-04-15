@@ -39,8 +39,7 @@ const styles = {
   }
 };
 
-const User = React.memo(props => {
-  const { item, classes, dispatch } = props;
+const User = React.memo(({ item, classes, dispatch, strings }) => {
   const [zoom, setZoom] = useState(true);
 
   const onDelete = () => {
@@ -85,10 +84,10 @@ const User = React.memo(props => {
                 UserService.edit(dispatch, item);
               }}
             >
-              Details
+              {strings.details}
             </Button>
             <Button color="secondary" onClick={onDelete}>
-              Delete
+              {strings.delete}
             </Button>
           </CardActions>
         </Card>
@@ -97,12 +96,17 @@ const User = React.memo(props => {
   );
 });
 
+const mapStateToProps = state => {
+  return {
+    strings: { ...state.strings.card, ...state.strings.global }
+  };
+};
 User.propTypes = {
   item: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired
 };
 
 export default compose(
-  connect(),
+  connect(mapStateToProps),
   withStyles(styles)
 )(User);

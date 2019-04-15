@@ -7,22 +7,22 @@ import Typography from "@material-ui/core/Typography";
 const styles = {
   root: {
     backgroundColor: "#f5f5f5",
-    marginTop: 115,
+    marginTop: 110,
     paddingLeft: 20,
     paddingRight: 20,
-    minHeight: "calc(100vh - 100px)"
+    minHeight: "calc(100vh - 95px)"
   }
 };
 
-const Content = ({ classes, name, children, show = true }) => {
-  return show ? (
+const Content = ({ classes, name, children }) => {
+  return (
     <Paper className={classes.root} elevation={1}>
       <Typography variant="h6" component="h3">
         {name}
       </Typography>
       {children}
     </Paper>
-  ) : null;
+  );
 };
 
 Content.propTypes = {

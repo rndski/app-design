@@ -1,4 +1,4 @@
-import React, { createContext } from "react";
+import React from "react";
 import { Provider } from "react-redux";
 import { combineReducers, createStore } from "redux";
 
@@ -10,18 +10,18 @@ import appReducer from "../reducers/app";
 import dataReducer from "../reducers/data";
 import popoverReducer from "../reducers/popover";
 import editReducer from "../reducers/edit";
+import stringsReducer from "../reducers/strings";
 
 const rootReducer = combineReducers({
   menu: menuReducer,
   app: appReducer,
   data: dataReducer,
   popover: popoverReducer,
-  edit: editReducer
+  edit: editReducer,
+  strings: stringsReducer
 });
 
 const store = createStore(rootReducer);
-
-export const appContext = createContext();
 
 export default props => {
   return (

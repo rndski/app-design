@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { withStyles } from "@material-ui/core/styles";
@@ -18,7 +18,11 @@ const ActionBar = React.memo(({ message, classes }) => {
 
   const [open, setOpen] = useState(true);
 
-  const onClose = (e, r) => {
+  useEffect(() => {
+    setOpen(true);
+  }, [message]);
+
+  const onClose = () => {
     setOpen(false);
   };
 

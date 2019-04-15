@@ -32,6 +32,7 @@ const styles = {
     alignItems: "center",
     textTransform: "capitalize"
   },
+
   item: {
     margin: "auto"
   }
@@ -50,8 +51,7 @@ function TabContainer(props) {
   );
 }
 
-const EditUser = React.memo(props => {
-  const { dispatch, classes, edit } = props;
+const EditUser = React.memo(({ dispatch, classes, edit, strings }) => {
   const { open } = edit;
 
   if (!open) return null;
@@ -72,6 +72,12 @@ const EditUser = React.memo(props => {
 
   const onTabChange = (e, tab) => {
     setActiveTab(tab);
+  };
+
+  const getAge = birthday => {
+    var ageDifMs = Date.now() - new Date(birthday).getTime();
+    var ageDate = new Date(ageDifMs); // miliseconds from epoch
+    return Math.abs(ageDate.getUTCFullYear() - 1970);
   };
 
   const onChange = e => {
@@ -95,7 +101,11 @@ const EditUser = React.memo(props => {
       case "date":
         setUser({
           ...user,
-          dob: { ...user.dob, [e.target.id]: e.target.value }
+          dob: {
+            ...user.dob,
+            [e.target.id]: e.target.value,
+            age: getAge(e.target.value)
+          }
         });
         break;
 
@@ -108,7 +118,6 @@ const EditUser = React.memo(props => {
     }
   };
 
-  //const contentText = isNew ? "New" : "Edit";
   const name = `${user.name.first} ${user.name.last}`;
 
   return (
@@ -132,7 +141,11 @@ const EditUser = React.memo(props => {
               style={{ flexGrow: 1, marginLeft: 10 }}
             >
               <Typography variant="h5">{name}</Typography>
-              <Typography variant="subtitle2" className={classes.item}>
+              <Typography
+                variant="subtitle2"
+                color="textSecondary"
+                className={classes.item}
+              >
                 {user.dob.age}
               </Typography>
             </div>
@@ -144,22 +157,15 @@ const EditUser = React.memo(props => {
             textColor="secondary"
             centered
           >
-            <Tab value={0} label="General" />
-            <Tab value={1} label="Address" />
+            <Tab value={0} label={strings.general} />
+            <Tab value={1} label={strings.address} />
           </Tabs>
         </DialogTitle>
         <DialogContent>
-          {activeTab === 0 && (
-            <TabContainer>
-              <UserGeneral user={user} onChange={onChange} />
-            </TabContainer>
-          )}
-
-          {activeTab === 1 && (
-            <TabContainer>
-              <UserAddress user={user} onChange={onChange} />
-            </TabContainer>
-          )}
+          <TabContainer>
+            {activeTab === 0 && <UserGeneral user={user} onChange={onChange} />}
+            {activeTab === 1 && <UserAddress user={user} onChange={onChange} />}
+          </TabContainer>
         </DialogContent>
         <DialogActions>
           <Button
@@ -168,7 +174,7 @@ const EditUser = React.memo(props => {
             onClick={handleSave}
             color="secondary"
           >
-            Save
+            {strings.save}
           </Button>
         </DialogActions>
       </form>
@@ -178,7 +184,8 @@ const EditUser = React.memo(props => {
 
 const mapStateToProps = state => {
   return {
-    edit: state.edit
+    edit: state.edit,
+    strings: { ...state.strings.detail, ...state.strings.global }
   };
 };
 EditUser.propTypes = {
