@@ -16,14 +16,12 @@ const styles = {
 
 const Content = ({ classes, name, children, show = true }) => {
   return show ? (
-    <React.Fragment>
-      <Paper className={classes.root} elevation={1}>
-        <Typography variant="h6" component="h3">
-          {name}
-        </Typography>
-        {children}
-      </Paper>
-    </React.Fragment>
+    <Paper className={classes.root} elevation={1}>
+      <Typography variant="h6" component="h3">
+        {name}
+      </Typography>
+      {children}
+    </Paper>
   ) : null;
 };
 

@@ -38,37 +38,31 @@ const Header = ({ classes, children, count, busy, dispatch }) => {
     dispatch({ type: OPEN_MENU, payload: { anchor: event.target } });
   };
   return (
-    <div className={classes.root}>
-      <AppBar position="fixed">
-        <Toolbar variant="dense">
-          <IconButton
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="Menu"
-            onClick={onMenu}
-          >
-            {busy ? (
-              <CircularProgress size={24} color="inherit" />
-            ) : (
-              <MenuIcon />
-            )}
-          </IconButton>
+    <AppBar position="fixed">
+      <Toolbar variant="dense">
+        <IconButton
+          className={classes.menuButton}
+          color="inherit"
+          aria-label="Menu"
+          onClick={onMenu}
+        >
+          {busy ? <CircularProgress size={24} color="inherit" /> : <MenuIcon />}
+        </IconButton>
 
-          <Typography variant="h6" color="inherit">
-            Users
-          </Typography>
-          <div className={classes.users}>
-            <Badge badgeContent={count} color="secondary">
-              <PersonOutlineRounded />
-            </Badge>
-          </div>
-          <Tooltip title="Coming Soon!" aria-label="Coming Soon!">
-            <Button color="inherit">Login</Button>
-          </Tooltip>
-        </Toolbar>
-        {children}
-      </AppBar>
-    </div>
+        <Typography variant="h6" color="inherit">
+          Users
+        </Typography>
+        <div className={classes.users}>
+          <Badge badgeContent={count} color="secondary">
+            <PersonOutlineRounded />
+          </Badge>
+        </div>
+        <Tooltip title="Coming Soon!" aria-label="Coming Soon!">
+          <Button color="inherit">Login</Button>
+        </Tooltip>
+      </Toolbar>
+      {children}
+    </AppBar>
   );
 };
 

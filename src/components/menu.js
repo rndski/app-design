@@ -26,34 +26,32 @@ const UserMenu = ({ anchor, open, classes, dispatch }) => {
   const [themeState, themeDispatch] = useTheme();
 
   return (
-    <div>
-      <Menu
-        id="color-menu"
-        anchorEl={anchor}
-        open={open}
-        onClose={handleClose}
-        disableAutoFocusItem
-      >
-        {userThemes.map(item => {
-          return (
-            <MenuItem
-              key={item.name}
-              selected={item.name === themeState.name}
-              onClick={() => {
-                themeDispatch({ type: CHANGE_THEME, payload: item.name });
-                handleClose();
-              }}
-            >
-              <Avatar
-                style={{ backgroundColor: item.color }}
-                className={classes.avatar}
-              />
-              {item.name}
-            </MenuItem>
-          );
-        })}
-      </Menu>
-    </div>
+    <Menu
+      id="color-menu"
+      anchorEl={anchor}
+      open={open}
+      onClose={handleClose}
+      disableAutoFocusItem
+    >
+      {userThemes.map(item => {
+        return (
+          <MenuItem
+            key={item.name}
+            selected={item.name === themeState.name}
+            onClick={() => {
+              themeDispatch({ type: CHANGE_THEME, payload: item.name });
+              handleClose();
+            }}
+          >
+            <Avatar
+              style={{ backgroundColor: item.color }}
+              className={classes.avatar}
+            />
+            {item.name}
+          </MenuItem>
+        );
+      })}
+    </Menu>
   );
 };
 
