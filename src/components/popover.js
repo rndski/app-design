@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import propTypes from "prop-types";
+import PropTypes from "prop-types";
 
 import Popover from "@material-ui/core/Popover";
 import CardMedia from "@material-ui/core/CardMedia";
@@ -29,9 +29,10 @@ const mapStateToProps = state => {
 };
 
 UserPopover.propTypes = {
-  open: propTypes.bool.isRequired,
-  image: propTypes.string.isRequired,
-  anchor: propTypes.object.isRequired
+  open: PropTypes.bool.isRequired,
+  image: PropTypes.string.isRequired,
+  anchor: PropTypes.object.isRequired,
+  dispatch: PropTypes.func.isRequired
 };
 
 export default connect(mapStateToProps)(UserPopover);

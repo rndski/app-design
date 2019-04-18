@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import propTypes from "prop-types";
+import PropTypes from "prop-types";
 import TextField from "@material-ui/core/TextField";
 
 const UserGeneral = ({ user, onChange, strings }) => {
@@ -33,14 +33,7 @@ const UserGeneral = ({ user, onChange, strings }) => {
         value={user.gender}
         onChange={onChange}
       />
-      <TextField
-        id="email"
-        label={strings.email}
-        type="email"
-        fullWidth
-        value={user.email}
-        onChange={onChange}
-      />
+      <TextField id="email" label={strings.email} type="email" fullWidth value={user.email} onChange={onChange} />
       <TextField
         id="date"
         label={strings.dob}
@@ -59,7 +52,9 @@ const mapStateToProps = state => {
   };
 };
 UserGeneral.propTypes = {
-  user: propTypes.object.isRequired
+  user: PropTypes.object.isRequired,
+  strings: PropTypes.object.isRequired,
+  dispatch: PropTypes.func.isRequired
 };
 
 export default connect(mapStateToProps)(UserGeneral);

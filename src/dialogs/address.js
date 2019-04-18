@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import propTypes from "prop-types";
+import PropTypes from "prop-types";
 import TextField from "@material-ui/core/TextField";
 
 const UserAddress = ({ user, onChange, strings }) => {
@@ -14,14 +14,7 @@ const UserAddress = ({ user, onChange, strings }) => {
         value={user.location.street}
         onChange={onChange}
       />
-      <TextField
-        id="city"
-        label={strings.city}
-        type="text"
-        fullWidth
-        value={user.location.city}
-        onChange={onChange}
-      />
+      <TextField id="city" label={strings.city} type="text" fullWidth value={user.location.city} onChange={onChange} />
       <TextField
         id="state"
         label={strings.state}
@@ -48,7 +41,9 @@ const mapStateToProps = state => {
   };
 };
 UserAddress.propTypes = {
-  user: propTypes.object.isRequired
+  user: PropTypes.object.isRequired,
+  strings: PropTypes.object.isRequired,
+  onChange: PropTypes.func.isRequired
 };
 
 export default connect(mapStateToProps)(UserAddress);

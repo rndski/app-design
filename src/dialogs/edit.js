@@ -41,10 +41,7 @@ const styles = {
 function TabContainer(props) {
   return (
     <Slide in={true}>
-      <Typography
-        component="div"
-        style={{ minHeight: 240, maxHeight: 300, maxWidth: 400 }}
-      >
+      <Typography component="div" style={{ minHeight: 240, maxHeight: 300, maxWidth: 400 }}>
         {props.children}
       </Typography>
     </Slide>
@@ -121,59 +118,37 @@ const EditUser = React.memo(({ dispatch, classes, edit, strings }) => {
   const name = `${user.name.first} ${user.name.last}`;
 
   return (
-    <Dialog
-      open={open}
-      onClose={handleClose}
-      aria-labelledby="form-dialog-title"
-    >
+    <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
       <form onSubmit={handleSave}>
         <DialogTitle id="form-dialog-title">
           <div className={classes.container}>
-            <Avatar
-              alt={name}
-              src={user.picture.large}
-              className={classes.avatar}
-              style={{ flexGrow: 0 }}
-            />
-
-            <div
-              className={classes.item}
-              style={{ flexGrow: 1, marginLeft: 10 }}
-            >
+            <Avatar alt={name} src={user.picture.large} className={classes.avatar} style={{ flexGrow: 0 }} />
+            <div className={classes.item} style={{ flexGrow: 1, marginLeft: 10 }}>
               <Typography variant="h5">{name}</Typography>
-              <Typography
-                variant="subtitle2"
-                color="textSecondary"
-                className={classes.item}
-              >
+              <Typography variant="subtitle2" color="textSecondary" className={classes.item}>
                 {user.dob.age}
               </Typography>
             </div>
           </div>
-          <Tabs
-            onChange={onTabChange}
-            value={activeTab}
-            indicatorColor="primary"
-            textColor="secondary"
-            centered
-          >
+          <Tabs onChange={onTabChange} value={activeTab} indicatorColor="primary" textColor="secondary" centered>
             <Tab value={0} label={strings.general} />
             <Tab value={1} label={strings.address} />
           </Tabs>
         </DialogTitle>
         <DialogContent>
-          <TabContainer>
-            {activeTab === 0 && <UserGeneral user={user} onChange={onChange} />}
-            {activeTab === 1 && <UserAddress user={user} onChange={onChange} />}
-          </TabContainer>
+          {activeTab === 0 && (
+            <TabContainer>
+              <UserGeneral user={user} onChange={onChange} />
+            </TabContainer>
+          )}
+          {activeTab === 1 && (
+            <TabContainer>
+              <UserAddress user={user} onChange={onChange} />
+            </TabContainer>
+          )}
         </DialogContent>
         <DialogActions>
-          <Button
-            variant="contained"
-            type="submit"
-            onClick={handleSave}
-            color="secondary"
-          >
+          <Button variant="contained" type="submit" onClick={handleSave} color="secondary">
             {strings.save}
           </Button>
         </DialogActions>
@@ -189,7 +164,10 @@ const mapStateToProps = state => {
   };
 };
 EditUser.propTypes = {
-  edit: PropTypes.object
+  edit: PropTypes.object.isRequired,
+  strings: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired,
+  dispatch: PropTypes.func.isRequired
 };
 
 export default compose(

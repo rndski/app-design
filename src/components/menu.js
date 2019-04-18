@@ -1,5 +1,5 @@
 import React from "react";
-import propTypes from "prop-types";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { compose } from "redux";
 
@@ -26,13 +26,7 @@ const UserMenu = ({ anchor, open, classes, dispatch }) => {
   const [themeState, themeDispatch] = useTheme();
 
   return (
-    <Menu
-      id="color-menu"
-      anchorEl={anchor}
-      open={open}
-      onClose={handleClose}
-      disableAutoFocusItem
-    >
+    <Menu id="color-menu" anchorEl={anchor} open={open} onClose={handleClose} disableAutoFocusItem>
       {userThemes.map(item => {
         return (
           <MenuItem
@@ -43,10 +37,7 @@ const UserMenu = ({ anchor, open, classes, dispatch }) => {
               handleClose();
             }}
           >
-            <Avatar
-              style={{ backgroundColor: item.color }}
-              className={classes.avatar}
-            />
+            <Avatar style={{ backgroundColor: item.color }} className={classes.avatar} />
             {item.name}
           </MenuItem>
         );
@@ -63,9 +54,10 @@ const mapStateToProps = state => {
 };
 
 UserMenu.propTypes = {
-  open: propTypes.bool,
-  anchor: propTypes.object,
-  classes: propTypes.object.isRequired
+  open: PropTypes.bool.isRequired,
+  anchor: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired,
+  dispatch: PropTypes.func.isRequired
 };
 export default compose(
   connect(mapStateToProps),

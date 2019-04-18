@@ -3,13 +3,18 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
+import FilterList from "@material-ui/icons/FilterList";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
+import Badge from "@material-ui/core/Badge";
+import IconButton from "@material-ui/core/IconButton";
 import UserService from "../data/service";
+import Filter from "../dialogs/filter";
+import { TOGGLE_FILTER } from "../reducers/filter";
 
 const styles = {
   root: {
-    height: 40,
+    height: 50,
     display: "flex",
     padding: 5,
     justifyContent: "center"
@@ -18,7 +23,7 @@ const styles = {
 
 const Actions = ({ classes, dispatch, strings }) => {
   useEffect(() => {
-    UserService.load(dispatch, 50);
+    UserService.load(dispatch, 15);
   }, []);
 
   const actions = [
@@ -44,6 +49,10 @@ const Actions = ({ classes, dispatch, strings }) => {
       color: "secondary"
     }
   ];
+
+  const toggle = e => {
+    dispatch({ type: TOGGLE_FILTER, payload: { anchor: e.target } });
+  };
   return (
     <Paper className={classes.root} square={true} elevation={0}>
       {actions.map(item => {
@@ -53,17 +62,28 @@ const Actions = ({ classes, dispatch, strings }) => {
           </Button>
         );
       })}
+
+      <IconButton onClick={toggle}>
+        <Badge badgeContent={0} color="secondary">
+          <FilterList fontSize="small" color="primary" />
+        </Badge>
+      </IconButton>
+
+      <Filter />
     </Paper>
   );
 };
 
 const mapStateToProps = state => {
   return {
-    strings: state.strings.actions
+    strings: state.strings.actions,
+    filtered: state.filter.filtered
   };
 };
 Actions.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  strings: PropTypes.object.isRequired,
+  dispatch: PropTypes.func.isRequired
 };
 
 export default compose(

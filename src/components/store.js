@@ -11,6 +11,7 @@ import dataReducer from "../reducers/data";
 import popoverReducer from "../reducers/popover";
 import editReducer from "../reducers/edit";
 import stringsReducer from "../reducers/strings";
+import filterReducer from "../reducers/filter";
 
 const rootReducer = combineReducers({
   menu: menuReducer,
@@ -18,16 +19,17 @@ const rootReducer = combineReducers({
   data: dataReducer,
   popover: popoverReducer,
   edit: editReducer,
-  strings: stringsReducer
+  strings: stringsReducer,
+  filter: filterReducer
 });
 
 const store = createStore(rootReducer);
 
-export default props => {
+export default ({ children }) => {
   return (
     <Provider store={store}>
       <ThemeProvider>
-        <App>{props.children}</App>
+        <App>{children}</App>
       </ThemeProvider>
     </Provider>
   );

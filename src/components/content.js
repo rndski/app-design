@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
 
 const styles = {
   root: {
@@ -14,12 +13,9 @@ const styles = {
   }
 };
 
-const Content = ({ classes, name, children }) => {
+const Content = ({ classes, children }) => {
   return (
     <Paper className={classes.root} elevation={1}>
-      <Typography variant="h6" component="h3">
-        {name}
-      </Typography>
       {children}
     </Paper>
   );
@@ -27,8 +23,7 @@ const Content = ({ classes, name, children }) => {
 
 Content.propTypes = {
   classes: PropTypes.object.isRequired,
-  name: PropTypes.string,
-  show: PropTypes.bool
+  name: PropTypes.string
 };
 
 export default withStyles(styles)(Content);

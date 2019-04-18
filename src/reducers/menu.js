@@ -1,5 +1,6 @@
 const menuInitialState = {
-  open: false
+  open: false,
+  anchor: {}
 };
 
 export const OPEN_MENU = "open-menu";
@@ -13,7 +14,7 @@ const menuReducer = (state = menuInitialState, action) => {
       newState = { open: true, ...action.payload };
       break;
     case CLOSE_MENU:
-      newState = { open: false };
+      newState = { ...menuInitialState };
       break;
     default:
       return state;

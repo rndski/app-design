@@ -39,13 +39,7 @@ const ActionBar = React.memo(({ message, classes }) => {
       autoHideDuration={2500}
       onClose={onClose}
       action={[
-        <IconButton
-          key="close"
-          aria-label="Close"
-          color="inherit"
-          className={classes.close}
-          onClick={onClose}
-        >
+        <IconButton key="close" aria-label="Close" color="inherit" className={classes.close} onClick={onClose}>
           <CloseIcon />
         </IconButton>
       ]}

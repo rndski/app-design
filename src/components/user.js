@@ -59,18 +59,8 @@ const User = React.memo(({ item, classes, dispatch, strings }) => {
       <Zoom in={zoom}>
         <Card xs={12} sm={6} md={4} lg={4} className={classes.card}>
           <CardHeader
-            avatar={
-              <Avatar
-                onClick={openProfilePic}
-                aria-label=""
-                src={item.picture.large}
-              />
-            }
-            title={
-              <Typography variant="inherit">{`${item.name.first} ${
-                item.name.last
-              }`}</Typography>
-            }
+            avatar={<Avatar onClick={openProfilePic} aria-label="" src={item.picture.large} />}
+            title={<Typography variant="inherit">{`${item.name.first} ${item.name.last}`}</Typography>}
             subheader={
               <Typography color="textSecondary" variant="subtitle2">
                 {item.dob.age}
@@ -80,6 +70,7 @@ const User = React.memo(({ item, classes, dispatch, strings }) => {
 
           <CardActions>
             <Button
+              color="primary"
               onClick={() => {
                 UserService.edit(dispatch, item);
               }}
@@ -103,7 +94,9 @@ const mapStateToProps = state => {
 };
 User.propTypes = {
   item: PropTypes.object.isRequired,
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  strings: PropTypes.object.isRequired,
+  dispatch: PropTypes.func.isRequired
 };
 
 export default compose(

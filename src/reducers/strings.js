@@ -11,7 +11,9 @@ const appStrings = {
   },
   global: {
     save: "save",
-    delete: "delete"
+    delete: "delete",
+    clear: "clear",
+    close: "close"
   },
   card: {
     details: "details"
@@ -32,6 +34,11 @@ const appStrings = {
     city: "city",
     state: "state",
     postcode: "postal code"
+  },
+  filter: {
+    male: "male",
+    female: "female",
+    namePlaceholder: "filter by name..."
   }
 };
 Object.freeze(appStrings);

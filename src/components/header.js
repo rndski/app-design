@@ -40,18 +40,14 @@ const Header = ({ classes, children, count, busy, dispatch, strings }) => {
   return (
     <AppBar position="fixed">
       <Toolbar variant="dense">
-        <IconButton
-          className={classes.menuButton}
-          color="inherit"
-          aria-label="Menu"
-          onClick={onMenu}
-        >
+        <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" onClick={onMenu}>
           {busy ? <CircularProgress size={24} color="inherit" /> : <MenuIcon />}
         </IconButton>
 
         <Typography variant="h6" color="inherit">
           {strings.title}
         </Typography>
+
         <div className={classes.users}>
           <Badge badgeContent={count} color="secondary">
             <PersonOutlineRounded />
@@ -69,7 +65,9 @@ const Header = ({ classes, children, count, busy, dispatch, strings }) => {
 Header.propTypes = {
   classes: PropTypes.object.isRequired,
   busy: PropTypes.bool.isRequired,
-  count: PropTypes.number.isRequired
+  count: PropTypes.number.isRequired,
+  dispatch: PropTypes.func.isRequired,
+  strings: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => {
