@@ -1,8 +1,8 @@
 const filterInitialState = {
   open: false,
+  filtered: false,
   gender: "",
-  name: "",
-  filtered: 0
+  name: ""
 };
 
 export const TOGGLE_FILTER = "toggle-filter";
@@ -11,12 +11,14 @@ export const CLEAR_FILTER = "clear-filter";
 export const CLOSE_FILTER = "close-filter";
 export const FILTER_COUNT = "filter-count";
 
+const isFiltered = filter => filter.gender.length > 0 || filter.name.length > 0;
+
 export default (state = filterInitialState, action) => {
   switch (action.type) {
     case TOGGLE_FILTER:
       return { ...state, ...action.payload, open: !state.open };
     case APPLY_FILTER:
-      return { ...state, ...action.payload, fitered: true };
+      return { ...state, ...action.payload, filtered: isFiltered(action.payload) };
     case CLEAR_FILTER:
       return { ...filterInitialState, open: true };
     case CLOSE_FILTER:

@@ -3,14 +3,15 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
+import { green } from "@material-ui/core/colors";
 import FilterList from "@material-ui/icons/FilterList";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
-import Badge from "@material-ui/core/Badge";
 import IconButton from "@material-ui/core/IconButton";
 import UserService from "../data/service";
 import Filter from "../dialogs/filter";
 import { TOGGLE_FILTER } from "../reducers/filter";
+import { useTheme } from "../providers/theme";
 
 const styles = {
   root: {
@@ -18,10 +19,13 @@ const styles = {
     display: "flex",
     padding: 5,
     justifyContent: "center"
+  },
+  filtered: {
+    backgroundColor: green[900]
   }
 };
 
-const Actions = ({ classes, dispatch, strings }) => {
+const Actions = ({ classes, dispatch, strings, filtered }) => {
   useEffect(() => {
     UserService.load(dispatch, 15);
   }, []);
@@ -53,6 +57,10 @@ const Actions = ({ classes, dispatch, strings }) => {
   const toggle = e => {
     dispatch({ type: TOGGLE_FILTER, payload: { anchor: e.target } });
   };
+
+  const [theme] = useTheme();
+  const style = filtered ? { backgroundColor: theme.theme.palette.primary[100] } : {};
+
   return (
     <Paper className={classes.root} square={true} elevation={0}>
       {actions.map(item => {
@@ -63,10 +71,8 @@ const Actions = ({ classes, dispatch, strings }) => {
         );
       })}
 
-      <IconButton onClick={toggle}>
-        <Badge badgeContent={0} color="secondary">
-          <FilterList fontSize="small" color="primary" />
-        </Badge>
+      <IconButton style={style} onClick={toggle}>
+        <FilterList fontSize="small" color="primary" />
       </IconButton>
 
       <Filter />
@@ -83,7 +89,8 @@ const mapStateToProps = state => {
 Actions.propTypes = {
   classes: PropTypes.object.isRequired,
   strings: PropTypes.object.isRequired,
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
+  filtered: PropTypes.bool.isRequired
 };
 
 export default compose(
