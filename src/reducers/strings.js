@@ -13,7 +13,8 @@ const appStrings = {
     save: "save",
     delete: "delete",
     clear: "clear",
-    close: "close"
+    close: "close",
+    all: "all"
   },
   card: {
     details: "details"

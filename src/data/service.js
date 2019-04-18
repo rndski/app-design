@@ -2,12 +2,7 @@ import axios from "axios";
 import uuidv4 from "uuid/v4";
 
 import { EDIT_USER, EDIT_CANCEL } from "../reducers/edit";
-import {
-  ADD_USERS,
-  DELETE_USER,
-  CLEAR_USERS,
-  UPDATE_USER
-} from "../reducers/data";
+import { ADD_USERS, DELETE_USER, CLEAR_USERS, UPDATE_USER } from "../reducers/data";
 import { BUSY, ERROR, MESSAGE } from "../reducers/app";
 
 export const User = () => {
@@ -94,9 +89,7 @@ const UserService = {
     dispatch({
       type: DELETE_USER,
       payload: {
-        users: [
-          item
-        ] /*,
+        users: [item] /*,
         message: `${item.name.first} ${item.name.last} has been deleted...`*/
       }
     });
@@ -113,7 +106,7 @@ const UserService = {
     dispatch({ type: EDIT_USER, payload: { user: new User(), isNew: true } });
   },
   clear: dispatch => {
-    dispatchWithDelay(dispatch, CLEAR_USERS, 500);
+    dispatchWithDelay(dispatch, CLEAR_USERS);
   }
 };
 

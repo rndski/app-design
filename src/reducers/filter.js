@@ -1,3 +1,5 @@
+import { CLEAR_USERS } from "./data";
+
 const filterInitialState = {
   open: false,
   filtered: false,
@@ -20,7 +22,8 @@ export default (state = filterInitialState, action) => {
     case APPLY_FILTER:
       return { ...state, ...action.payload, filtered: isFiltered(action.payload) };
     case CLEAR_FILTER:
-      return { ...filterInitialState, open: true };
+    case CLEAR_USERS:
+      return { ...filterInitialState };
     case CLOSE_FILTER:
       return { ...state, open: false };
     case FILTER_COUNT:

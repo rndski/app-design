@@ -14,9 +14,6 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import Zoom from "@material-ui/core/Zoom";
 
-import pink from "@material-ui/core/colors/pink";
-import blue from "@material-ui/core/colors/blue";
-
 import UserService from "../data/service";
 import { OPEN_PROFILE_PIC } from "../reducers/popover";
 
@@ -27,15 +24,8 @@ const styles = {
     textTransform: "capitalize"
   },
   actions: {
-    display: "flex-grow"
-  },
-  blueAvatar: {
-    color: blue[900],
-    backgroundColor: blue[50]
-  },
-  pinkAvatar: {
-    color: pink[900],
-    backgroundColor: pink[50]
+    display: "flex",
+    justifyContent: "space-between"
   }
 };
 
@@ -68,7 +58,7 @@ const User = React.memo(({ item, classes, dispatch, strings }) => {
             }
           />
 
-          <CardActions>
+          <CardActions className={classes.actions}>
             <Button
               color="primary"
               onClick={() => {
