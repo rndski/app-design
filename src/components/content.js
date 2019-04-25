@@ -22,8 +22,7 @@ const Content = ({ classes, children }) => {
 };
 
 Content.propTypes = {
-  classes: PropTypes.object.isRequired,
-  name: PropTypes.string
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(Content);

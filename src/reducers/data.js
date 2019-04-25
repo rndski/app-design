@@ -9,14 +9,10 @@ export const CLEAR_USERS = "clear-users";
 export const UPDATE_USER = "update-user";
 export const SORT_USERS = "sort-users";
 
-const sortUsers = (users, ascending) => {
-  const sorted = users.sort((left, right) => {
-    if (left.name.last < right.name.last) return ascending ? -1 : 1;
-    else if (left.name.last > right.name.last) return ascending ? 1 : -1;
-    return 0;
-  });
-  return sorted;
-};
+const sortUsers = (users, ascending) =>
+  ascending
+    ? users.sort((a, b) => a.name.last.localeCompare(b.name.last))
+    : users.sort((a, b) => b.name.last.localeCompare(a.name.last));
 
 export default (state = dataInitialState, action) => {
   switch (action.type) {

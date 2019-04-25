@@ -69,11 +69,11 @@ const Actions = ({ classes, dispatch, strings, filtered, sortedAscending }) => {
   };
 
   const [theme] = useTheme();
-  const style = filtered ? { backgroundColor: theme.theme.palette.primary[100] } : {};
+  const style = filtered ? { paddingTop: 9, backgroundColor: theme.theme.palette.primary[100] } : { paddingTop: 9 };
 
   return (
     <Paper className={classes.root} square={true} elevation={0}>
-      <IconButton className={!sortedAscending ? "" : classes.rotated} onClick={onSort}>
+      <IconButton style={{ paddingTop: 10 }} className={!sortedAscending ? "" : classes.rotated} onClick={onSort}>
         <SortIcon fontSize="small" color="primary" />
       </IconButton>
 
