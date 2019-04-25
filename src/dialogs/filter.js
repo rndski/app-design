@@ -72,9 +72,9 @@ const Filter = ({ classes, filter, dispatch, strings, isFiltered }) => {
           }}
         />
         <RadioGroup name="gender" value={filter.gender} onChange={onChange} className={classes.radio}>
-          <FormControlLabel value="" control={<Radio />} label={strings.all} />
           <FormControlLabel value="female" control={<Radio />} label={strings.female} />
           <FormControlLabel value="male" control={<Radio />} label={strings.male} />
+          <FormControlLabel value="" control={<Radio />} label={strings.all} />
         </RadioGroup>
       </FormControl>
     </Popover>

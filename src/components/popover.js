@@ -15,7 +15,7 @@ const UserPopover = ({ open, image, anchor, dispatch }) => {
   };
   return (
     <Popover open={open} anchorEl={anchor} onClose={onClose}>
-      <CardMedia style={{ height: 275, width: 275, margin: 3 }} image={image} />
+      <CardMedia style={{ height: 275, width: 275 }} image={image} />
     </Popover>
   );
 };

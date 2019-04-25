@@ -1,16 +1,28 @@
 const dataInitialState = {
-  users: []
+  users: [],
+  sortAscending: true
 };
 
 export const ADD_USERS = "add-users";
 export const DELETE_USER = "delete-user";
 export const CLEAR_USERS = "clear-users";
 export const UPDATE_USER = "update-user";
+export const SORT_USERS = "sort-users";
+
+const sortUsers = (users, ascending) => {
+  const sorted = users.sort((left, right) => {
+    if (left.name.last < right.name.last) return ascending ? -1 : 1;
+    else if (left.name.last > right.name.last) return ascending ? 1 : -1;
+    return 0;
+  });
+  return sorted;
+};
 
 export default (state = dataInitialState, action) => {
   switch (action.type) {
     case ADD_USERS:
-      return { ...state, users: [...state.users, ...action.payload.users] };
+      const sorted = sortUsers([...state.users, ...action.payload.users], state.sortAscending);
+      return { ...state, users: sorted };
     case UPDATE_USER:
       let updated = action.payload.user;
       const newUsers = state.users.map(obj => (updated.login.uuid === obj.login.uuid ? updated : obj));
@@ -25,6 +37,9 @@ export default (state = dataInitialState, action) => {
       return { ...state, ...action.payload, users };
     case CLEAR_USERS:
       return { ...dataInitialState };
+    case SORT_USERS:
+      const u = sortUsers(state.users, !state.sortAscending);
+      return { ...state, users: [...u], sortAscending: !state.sortAscending };
     default:
       return state;
   }
